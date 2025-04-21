@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Global Clicker War</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icons/6.11.0/css/flag-icons.min.css">
+    <style>
+        :root {
+            --bg-color: #f5f5f5;
+            --text-color: #333;
+            --header-bg: #2c3e50;
+            --header-text: white;
+            --card-bg: white;
+            --card-shadow: rgba(0,0,0,0.1);
+            --button-bg: #e74c3c;
+            --button-hover: #c0392b;
+            --table-header: #2c3e50;
+            --table-row-even: #f2f2f2;
+            --table-row-hover: #e0e0e0;
+            --user-row: #ffeaa7;
+            --chat-bg: white;
+            --chat-border: #ddd;
+            --chat-input-bg: white;
+        }
+
+        .dark-mode {
+            --bg-color: #121212;
+            --text-color: #e0e0e0;
+            --header-bg: #1a1a1a;
+            --header-text: #e0e0e0;
+            --card-bg: #1e1e1e;
+            --card-shadow: rgba(0,0,0,0.3);
+            --button-bg: #c0392b;
+            --button-hover: #a5281b;
+            --table-header: #1a1a1a;
+            --table-row-even: #2a2a2a;
+            --table-row-hover: #3a3a3a;
+            --user-row: #423a22;
+            --chat-bg: #1e1e1e;
+            --chat-border: #333;
+            --chat-input-bg: #2a2a2a;
+        }
+
+        body {
+            font-family: "Courier New", cursive, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: all 0.3s ease;
+        }
+
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Chat Sidebar Styles */
+        .sidebar {
+            width: 300px;
+            height: 100vh;
+            position: fixed;
+            left: -260px;
+            top: 0;
+            background-color: var(--card-bg);
+            border-right: 1px solid var(--chat-border);
+            transition: left 0.3s ease;
+            z-index: 100;
+            display: flex;
+        }
+
+        .sidebar.open {
+            left: 0;
+        }
+
+        .chat-toggle {
+            width: 40px;
+            height: 40px;
+            background-color: var(--button-bg);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            position: absolute;
+            right: -20px;
+            top: 20px;
+            z-index: 101;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .chat-container {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            padding: 10px;
+        }
+
+        .chat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--chat-border);
+        }
+
+        #chat-close {
+            background: none;
+            border: none;
+            font-size: 1.5em;
+            cursor: pointer;
+            color: var(--text-color);
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            max-height: 60vh;
+            padding: 5px;
+            margin: 10px 0;
+            border: 1px solid var(--chat-border);
+            border-radius: 4px;
+        }
+
+        .message {
+            margin-bottom: 8px;
+            padding: 6px;
+            font-size: 0.85em;
+            line-height: 1.4;
+            word-break: break-word;
+        }
+
+        .message-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 2px;
+            font-size: 0.9em;
+        }
+
+        .message-flag {
+            margin-right: 5px;
+            font-size: 1em;
+        }
+
+        .message-text {
+            padding-left: 25px;
+        }
+
+        /* Main Content Styles */
+        .main-content {
+            flex: 1;
+            padding: 20px;
+            margin-left: 40px;
+            transition: margin-left 0.3s ease;
+        }
+
+        .sidebar.open + .main-content {
+            margin-left: 340px;
+        }
+
+        .header {
+            background-color: var(--header-bg);
+            color: var(--header-text);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .country-select, .clicker {
+            background: var(--card-bg);
+            margin: 20px 0;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px var(--card-shadow);
+        }
+
+        #click-button {
+            padding: 15px 30px;
+            font-size: 18px;
+            background-color: var(--button-bg);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px;
+            transition: all 0.3s;
+        }
+
+        #click-button:hover {
+            background-color: var(--button-hover);
+            transform: scale(1.05);
+        }
+
+        #click-button:active {
+            transform: scale(0.98);
+        }
+
+        .leaderboard {
+            margin-top: 40px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px var(--card-shadow);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: var(--table-header);
+            color: white;
+            position: sticky;
+            top: 0;
+        }
+
+        tr:nth-child(even) {
+            background-color: var(--table-row-even);
+        }
+
+        tr:hover {
+            background-color: var(--table-row-hover);
+        }
+
+        .flag-cell {
+            width: 40px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .current-country {
+            font-weight: bold;
+            margin: 15px 0;
+            font-size: 1.2em;
+        }
+
+        .click-count {
+            font-size: 1.5em;
+            margin: 10px 0;
+            color: var(--button-bg);
+        }
+
+        .loading {
+            color: var(--text-color);
+            font-style: italic;
+            padding: 20px;
+        }
+
+        .user-row {
+            background-color: var(--user-row) !important;
+            font-weight: bold;
+        }
+
+        select, button, input {
+            padding: 10px;
+            margin: 5px;
+            border-radius: 4px;
+            border: 1px solid var(--chat-border);
+            background-color: var(--chat-input-bg);
+            color: var(--text-color);
+        }
+
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        /* Dark Mode Toggle */
+        .dark-mode-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--button-bg);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            z-index: 1000;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .sidebar {
+                left: -300px;
+                width: 80%;
+            }
+            
+            .sidebar.open {
+                left: 0;
+            }
+            
+            .main-content {
+                margin-left: 0;
+            }
+            
+            .sidebar.open + .main-content {
+                margin-left: 80%;
+            }
+            
+            .chat-toggle {
+                right: -25px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Chat Sidebar -->
+        <div class="sidebar hidden" id="sidebar">
+            <div class="chat-toggle" id="chat-toggle">💬</div>
+            <div class="chat-container">
+                <div class="chat-header">
+                    <h3>Global Chat</h3>
+                    <button id="chat-close">×</button>
+                </div>
+                <div id="chat-auth" class="hidden">
+                    <p>Enter a username to join chat:</p>
+                    <input type="text" id="chat-username" placeholder="Your username">
+                    <button id="chat-join">Join</button>
+                </div>
+                <div id="chat-interface" class="hidden">
+                    <div class="chat-messages" id="chat-messages"></div>
+                    <div class="chat-input">
+                        <input type="text" id="chat-message" placeholder="Type message...">
+                        <button id="chat-send">Send</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="header">
+                <h1>Global Clicker War</h1>
+                <p>Click to make your country #1 in the world!</p>
+            </div>
+
+            <div id="detecting-country" class="loading">
+                Detecting your country...
+            </div>
+
+            <div class="country-select hidden" id="country-select">
+                <select id="country-dropdown">
+                    <option value="">-- Select Country --</option>
+                    <!-- Countries will be loaded dynamically -->
+                </select>
+                <button id="select-btn">Select Country</button>
+            </div>
+
+            <div id="game-area" class="hidden">
+                <div class="clicker">
+                    <div class="current-country">
+                        Your country: <span id="current-country-name"></span>
+                        <span id="current-country-flag" class="fi"></span>
+                    </div>
+                    <div class="click-count">
+                        Your clicks: <span id="user-clicks">0</span>
+                    </div>
+                    <button id="click-button">CLICK FOR YOUR COUNTRY!</button>
+                </div>
+            </div>
+
+            <div class="leaderboard">
+                <h2>Global Leaderboard</h2>
+                <div id="leaderboard-loading" class="loading">Loading leaderboard...</div>
+                <table id="leaderboard-table" class="hidden">
+                    <thead>
+                        <tr>
+                            <th>Rank</th>
+                            <th class="flag-cell">Flag</th>
+                            <th>Country</th>
+                            <th>Clicks</th>
+                        </tr>
+                    </thead>
+                    <tbody id="leaderboard-body">
+                        <!-- Leaderboard will be populated dynamically -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dark Mode Toggle -->
+    <button class="dark-mode-toggle" id="dark-mode-toggle">🌓</button>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-database-compat.js"></script>
+    
+    <script src="app.js"></script>
+</body>
+</html>
