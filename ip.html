@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IP & Port Lookup</title>
+    <style>
+        :root {
+            --bg-primary: #000000;
+            --bg-secondary: #121212;
+            --bg-tertiary: #1E1E1E;
+            --text-primary: #FFFFFF;
+            --text-secondary: #B3B3B3;
+            --accent: #BB86FC;
+            --accent-hover: #9E5AFF;
+            --border: #333333;
+            --success: #4CAF50;
+            --error: #CF6679;
+            --rainbow-1: #ff9a9e;
+            --rainbow-2: #fad0c4;
+            --rainbow-3: #fbc2eb;
+            --rainbow-4: #a6c1ee;
+            --rainbow-5: #84fab0;
+            --rainbow-6: #8fd3f4;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        h1, h2, h3 {
+            margin: 0;
+            font-weight: 600;
+        }
+        
+        h1 {
+            font-size: 28px;
+            margin-bottom: 24px;
+            color: var(--accent);
+        }
+        
+        .input-container {
+            background-color: var(--bg-secondary);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+        
+        .input-group {
+            display: flex;
+            gap: 12px;
+        }
+        
+        input {
+            flex: 1;
+            padding: 12px 16px;
+            background-color: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 16px;
+            transition: border-color 0.2s;
+        }
+        
+        input:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+        
+        button {
+            background-color: var(--accent);
+            color: var(--bg-primary);
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        
+        button:hover {
+            background-color: var(--accent-hover);
+            transform: translateY(-1px);
+        }
+        
+        .result-container {
+            display: none;
+            gap: 20px;
+        }
+        
+        .ip-info {
+            flex: 2;
+            background-color: var(--bg-secondary);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+        
+        .side-column {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .copy-info, .port-info {
+            background-color: var(--bg-secondary);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+        
+        .info-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .flag {
+            width: 48px;
+            height: 32px;
+            margin-right: 16px;
+            border-radius: 4px;
+            object-fit: cover;
+        }
+        
+        .ip-details {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+        
+        .detail-item {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .detail-label {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 4px;
+        }
+        
+        .detail-value {
+            font-size: 16px;
+            font-weight: 500;
+        }
+        
+        .asn-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .asn-flag {
+            width: 20px;
+            height: 15px;
+            border-radius: 2px;
+            object-fit: cover;
+            display: none;
+        }
+        
+        .residential-badge {
+            position: absolute;
+            top: -20px;
+            left: 0;
+            font-size: 12px;
+            background: linear-gradient(90deg, var(--rainbow-1), var(--rainbow-2), var(--rainbow-3), var(--rainbow-4), var(--rainbow-5), var(--rainbow-6));
+            background-size: 400% 400%;
+            padding: 2px 8px;
+            border-radius: 10px;
+            animation: rainbowGlow 6s ease infinite;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            color: #000000;
+            font-weight: bold;
+        }
+        
+        .rainbow-glow {
+            position: relative;
+            animation: rainbowBorder 6s ease infinite;
+            background: linear-gradient(90deg, var(--rainbow-1), var(--rainbow-2), var(--rainbow-3), var(--rainbow-4), var(--rainbow-5), var(--rainbow-6));
+            background-size: 400% 400%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            padding: 2px 0;
+        }
+        
+        @keyframes rainbowGlow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        @keyframes rainbowBorder {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .copy-section {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .copy-box {
+            position: relative;
+            background-color: var(--bg-tertiary);
+            border-radius: 8px;
+            padding: 12px 16px;
+        }
+        
+        .copy-label {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 6px;
+        }
+        
+        .copy-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .copy-text {
+            font-family: 'Roboto Mono', monospace;
+            font-size: 14px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            padding-right: 10px;
+        }
+        
+        .copy-btn {
+            background-color: var(--bg-secondary);
+            color: var(--accent);
+            border: none;
+            border-radius: 6px;
+            padding: 6px 12px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .copy-btn:hover {
+            background-color: var(--accent);
+            color: var(--bg-primary);
+        }
+        
+        .port-title {
+            color: var(--accent);
+            margin-bottom: 12px;
+        }
+        
+        .port-description {
+            line-height: 1.5;
+        }
+        
+        .error {
+            color: var(--error);
+            margin-top: 12px;
+            font-size: 14px;
+            display: none;
+        }
+        
+        .loading {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 0;
+        }
+        
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            border-top: 4px solid var(--accent);
+            animation: spin 1s linear infinite;
+            margin-bottom: 16px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .success-message {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--success);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+        
+        .success-message.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        
+        .tooltip {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 200px;
+            background-color: var(--bg-tertiary);
+            color: var(--text-primary);
+            text-align: center;
+            border-radius: 6px;
+            padding: 8px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 14px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+        
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+        
+        .share-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 16px;
+        }
+        
+        .share-link input {
+            flex: 1;
+        }
+        
+        .share-link button {
+            padding: 10px 16px;
+        }
+        
+        .direct-link-mode .input-container {
+            display: none;
+        }
+        
+        .direct-link-mode h1 {
+            margin-bottom: 0;
+        }
+        
+        @media (max-width: 768px) {
+            .result-container {
+                flex-direction: column;
+            }
+            
+            .input-group {
+                flex-direction: column;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Roboto+Mono&display=swap" rel="stylesheet">
+</head>
+<body>
+    <h1>Rec's IP Lookup</h1>
+    
+    <div class="input-container">
+        <div class="input-group">
+            <input type="text" id="ipInput" placeholder="IP address (e.g., 8.8.8.8)" value="8.8.8.8">
+            <input type="text" id="portInput" placeholder="Port (e.g., 80)" value="80">
+            <button id="lookupBtn">Lookup</button>
+        </div>
+        <div class="error" id="errorMsg"></div>
+    </div>
+    
+    <div class="loading" id="loading">
+        <div class="spinner"></div>
+        <p>Fetching information...</p>
+    </div>
+    
+    <div class="result-container" id="resultContainer">
+        <div class="ip-info" id="ip-info">
+            <div class="info-header">
+                <img id="countryFlag" class="flag" src="" alt="Country Flag">
+                <h2>IP INFORMATION</h2>
+            </div>
+            <div class="ip-details">
+                <div class="detail-item">
+                    <span class="detail-label">Country</span>
+                    <span class="detail-value" id="countryName">-</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Region</span>
+                    <span class="detail-value" id="region">-</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">City</span>
+                    <span class="detail-value" id="city">-</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">ASN</span>
+                    <div class="asn-container" id="asnContainer">
+                        <span class="detail-value" id="asn">-</span>
+                        <img id="asnFlag" class="asn-flag" src="" alt="ASN country flag">
+                        <span class="residential-badge" id="residentialBadge">⭐ Domestic Proxy!</span>
+                    </div>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">ISP</span>
+                    <span class="detail-value" id="org">-</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Timezone</span>
+                    <span class="detail-value" id="timezone">-</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Network</span>
+                    <span class="detail-value" id="network">-</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Coordinates</span>
+                    <span class="detail-value" id="coordinates">-</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">ASN Rank</span>
+                    <span class="detail-value" id="asnRank">-</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">ASN Name</span>
+                    <span class="detail-value" id="asnName">-</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Network Size</span>
+                    <span class="detail-value" id="networkSize">-</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="side-column">
+            <div class="copy-info">
+                <h3>COPY INFORMATION</h3>
+                <div class="copy-section">
+                    <div class="copy-box">
+                        <span class="copy-label">IP Address</span>
+                        <div class="copy-content">
+                            <span class="copy-text" id="copyIpText">-</span>
+                            <button class="copy-btn" data-target="copyIpText">Copy</button>
+                        </div>
+                    </div>
+                    <div class="copy-box">
+                        <span class="copy-label">Port Number</span>
+                        <div class="copy-content">
+                            <span class="copy-text" id="copyPortText">-</span>
+                            <button class="copy-btn" data-target="copyPortText">Copy</button>
+                        </div>
+                    </div>
+                    <div class="copy-box">
+                        <span class="copy-label">IP:Port</span>
+                        <div class="copy-content">
+                            <span class="copy-text" id="copyIpPortText">-</span>
+                            <button class="copy-btn" data-target="copyIpPortText">Copy</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="share-link">
+                    <input type="text" id="shareLinkInput" readonly placeholder="Shareable link will appear here">
+                    <button id="copyShareLinkBtn">Copy Link</button>
+                </div>
+            </div>
+            
+            <div class="port-info">
+                <h3 class="port-title">PORT <span id="portNumber">-</span></h3>
+                <p class="port-description" id="portDescription">No port information available</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="success-message" id="successMessage">Copied to clipboard!</div>
+
+    <script>
+        // Global variable to store port data
+        let portData = [];
+        let currentIpData = null;
+        
+        // Get URL parameters
+        function getUrlParams() {
+            const params = new URLSearchParams(window.location.search);
+            return {
+                ip: params.get('ip') || '',
+                port: params.get('port') || ''
+            };
+        }
+        
+        // Update URL parameters
+        function updateUrlParams(ip, port) {
+            const params = new URLSearchParams();
+            if (ip) params.set('ip', ip);
+            if (port) params.set('port', port);
+            const newUrl = window.location.pathname + (params.toString() ? `?${params.toString()}` : '');
+            window.history.pushState({}, '', newUrl);
+            return newUrl;
+        }
+        
+        // Generate shareable link
+        function generateShareLink(ip, port) {
+            const params = new URLSearchParams();
+            if (ip) params.set('ip', ip);
+            if (port) params.set('port', port);
+            return window.location.origin + window.location.pathname + (params.toString() ? `?${params.toString()}` : '');
+        }
+        
+        // Check if we're in direct link mode (URL has parameters)
+        function isDirectLinkMode() {
+            const params = getUrlParams();
+            return params.ip || params.port;
+        }
+        
+        // Initialize the page
+        async function initPage() {
+            try {
+                const response = await fetch('https://files.catbox.moe/u7m2g4.csv');
+                const csvData = await response.text();
+                portData = parseCsv(csvData);
+            } catch (error) {
+                console.error('Error loading port data:', error);
+            }
+            
+            // Setup copy button event delegation
+            document.addEventListener('click', (e) => {
+                if (e.target.classList.contains('copy-btn')) {
+                    const targetId = e.target.getAttribute('data-target');
+                    copyToClipboard(targetId);
+                }
+            });
+            
+            // Setup copy share link button
+            document.getElementById('copyShareLinkBtn').addEventListener('click', () => {
+                copyToClipboard('shareLinkInput');
+            });
+            
+            // Check for URL parameters
+            const urlParams = getUrlParams();
+            if (isDirectLinkMode()) {
+                // Direct link mode - hide input container and process immediately
+                document.body.classList.add('direct-link-mode');
+                document.getElementById('ipInput').value = urlParams.ip || '';
+                document.getElementById('portInput').value = urlParams.port || '';
+                document.getElementById('lookupBtn').click();
+            }
+        }
+        
+        // Parse CSV data
+        function parseCsv(csv) {
+            const lines = csv.split('\n');
+            const result = [];
+            
+            for (let i = 1; i < lines.length; i++) {
+                if (lines[i].trim() === '') continue;
+                
+                const [protocol, port, description] = lines[i].split(',');
+                if (port && description) {
+                    result.push({
+                        protocol,
+                        port: parseInt(port),
+                        description: description.trim()
+                    });
+                }
+            }
+            
+            return result;
+        }
+        
+        // Lookup button click handler
+        document.getElementById('lookupBtn').addEventListener('click', async () => {
+            const ip = document.getElementById('ipInput').value.trim();
+            const port = document.getElementById('portInput').value.trim();
+            
+            // Validate at least one field is filled
+            if (!ip && !port) {
+                showError('Please enter either an IP address or port number');
+                return;
+            }
+            
+            // Update URL parameters
+            updateUrlParams(ip, port);
+            
+            // Update share link
+            document.getElementById('shareLinkInput').value = generateShareLink(ip, port);
+            
+            // Show loading indicator
+            document.getElementById('loading').style.display = 'flex';
+            document.getElementById('errorMsg').style.display = 'none';
+            document.getElementById('resultContainer').style.display = 'none';
+            
+            // Reset residential badge and ASN flag
+            document.getElementById('residentialBadge').style.opacity = '0';
+            document.getElementById('residentialBadge').style.transform = 'translateY(10px)';
+            document.getElementById('asnFlag').style.display = 'none';
+            document.getElementById('asn').classList.remove('rainbow-glow');
+            
+            try {
+                // Display copy information (if IP is provided)
+                if (ip) {
+                    document.getElementById('copyIpText').textContent = ip;
+                    document.getElementById('copyIpPortText').textContent = port ? `${ip}:${port}` : ip;
+                } else {
+                    document.getElementById('copyIpText').textContent = '-';
+                    document.getElementById('copyIpPortText').textContent = '-';
+                }
+                
+                // Display port information (if port is provided)
+                if (port) {
+                    document.getElementById('copyPortText').textContent = port;
+                    displayPortInfo(parseInt(port));
+                } else {
+                    document.getElementById('copyPortText').textContent = '-';
+                    document.getElementById('portNumber').textContent = '-';
+                    document.getElementById('portDescription').textContent = 'No port specified';
+                }
+                
+                // Fetch IP information only if IP is provided
+                if (ip) {
+                    const ipResponse = await fetch(`https://ipapi.co/${ip}/json/`);
+                    if (!ipResponse.ok) {
+                        throw new Error(ipResponse.status === 404 ? 'IP address not found' : 'Failed to fetch IP information');
+                    }
+                    currentIpData = await ipResponse.json();
+                    
+                    // Display IP information
+                    displayIpInfo(currentIpData);
+                    
+                    // Fetch ASN information if available
+                    if (currentIpData.asn) {
+                        const asnNumber = currentIpData.asn.replace('AS', '');
+                        try {
+                            const asnResponse = await fetch(`https://api.asrank.caida.org/v2/restful/asns/${asnNumber}`);
+                            if (asnResponse.ok) {
+                                const asnData = await asnResponse.json();
+                                displayAsnInfo(asnData, currentIpData.country_code);
+                            }
+                        } catch (error) {
+                            console.error('Error fetching ASN data:', error);
+                        }
+                    }
+                } else {
+                    // Hide IP info section if no IP was provided
+                    document.getElementById('ip-info').style.display = 'none';
+                }
+                
+                // Show results
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('resultContainer').style.display = 'flex';
+                
+                // Show IP info section if it was hidden
+                if (ip) {
+                    document.getElementById('ip-info').style.display = 'block';
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                showError(error.message);
+                document.getElementById('loading').style.display = 'none';
+            }
+        });
+        
+        // Display IP information
+        function displayIpInfo(data) {
+            document.getElementById('countryName').textContent = data.country_name || 'Unknown';
+            document.getElementById('region').textContent = data.region ? `${data.region} (${data.region_code || ''})` : 'Unknown';
+            document.getElementById('city').textContent = data.city || 'Unknown';
+            document.getElementById('asn').textContent = data.asn || 'Unknown';
+            document.getElementById('org').textContent = data.org || 'Unknown';
+            document.getElementById('timezone').textContent = data.timezone || 'Unknown';
+            document.getElementById('network').textContent = data.network || 'Unknown';
+            
+            // Coordinates
+            const lat = data.latitude;
+            const lon = data.longitude;
+            document.getElementById('coordinates').textContent = lat && lon ? `${lat}, ${lon}` : 'Unknown';
+            
+            // Set country flag
+            if (data.country_code) {
+                const flagUrl = `https://flagcdn.com/w160/${data.country_code.toLowerCase()}.png`;
+                document.getElementById('countryFlag').src = flagUrl;
+                document.getElementById('countryFlag').alt = `${data.country_name} flag`;
+            } else {
+                document.getElementById('countryFlag').src = '';
+                document.getElementById('countryFlag').alt = '';
+            }
+        }
+        
+        // Display ASN information
+        function displayAsnInfo(asnData, ipCountryCode) {
+            const asnInfo = asnData.data?.asn;
+            if (!asnInfo) return;
+            
+            document.getElementById('asnRank').textContent = asnInfo.rank ? `#${asnInfo.rank}` : 'Unknown';
+            document.getElementById('asnName').textContent = asnInfo.asnName || 'Unknown';
+            
+            if (asnInfo.cone) {
+                document.getElementById('networkSize').textContent = 
+                    `${asnInfo.cone.numberAsns} ASNs, ${asnInfo.cone.numberPrefixes} prefixes`;
+            }
+            
+            const asnElement = document.getElementById('asn');
+            const badgeElement = document.getElementById('residentialBadge');
+            const asnFlagElement = document.getElementById('asnFlag');
+            const asnContainer = document.getElementById('asnContainer');
+            
+            // Remove any existing tooltips
+            const existingTooltip = asnContainer.querySelector('.tooltiptext');
+            if (existingTooltip) {
+                existingTooltip.remove();
+            }
+            
+            // Check if ASN country is different from IP country
+            if (asnInfo.country?.iso && asnInfo.country.iso !== ipCountryCode) {
+                // Show ASN country flag
+                asnFlagElement.src = `https://flagcdn.com/w40/${asnInfo.country.iso.toLowerCase()}.png`;
+                asnFlagElement.style.display = 'block';
+                asnFlagElement.alt = `ASN country: ${asnInfo.country.iso}`;
+                
+                // Remove rainbow effects
+                asnElement.classList.remove('rainbow-glow');
+                badgeElement.style.opacity = '0';
+                badgeElement.style.transform = 'translateY(10px)';
+                
+                // Add tooltip explaining the mismatch
+                asnContainer.classList.add('tooltip');
+                asnContainer.innerHTML += '<span class="tooltiptext">ASN registered in different country</span>';
+            } 
+            // Check if this is likely a residential proxy (countries match)
+            else if (asnInfo.country?.iso === ipCountryCode) {
+                // Hide ASN country flag (since it matches IP country)
+                asnFlagElement.style.display = 'none';
+                
+                // Apply rainbow effects
+                asnElement.classList.add('rainbow-glow');
+                badgeElement.style.opacity = '1';
+                badgeElement.style.transform = 'translateY(0)';
+                
+                // Add tooltip to ASN
+                asnContainer.classList.add('tooltip');
+                asnContainer.innerHTML += '<span class="tooltiptext">ASNs Country Is Same As The IPs Country - Likely Residential/Cellular/Business Proxy</span>';
+            }
+            // No country info available
+            else {
+                // Hide ASN country flag
+                asnFlagElement.style.display = 'none';
+                
+                // Remove rainbow effects
+                asnElement.classList.remove('rainbow-glow');
+                badgeElement.style.opacity = '0';
+                badgeElement.style.transform = 'translateY(10px)';
+            }
+        }
+        
+        // Display port information
+        function displayPortInfo(port) {
+            document.getElementById('portNumber').textContent = port;
+            
+            const portInfo = portData.find(item => item.port === port);
+            if (portInfo) {
+                document.getElementById('portDescription').textContent = 
+                    `Protocol: ${portInfo.protocol}\n${portInfo.description}`;
+            } else {
+                document.getElementById('portDescription').textContent = 
+                    'No information available for this port number.';
+            }
+        }
+        
+        // Show error message
+        function showError(message) {
+            const errorElement = document.getElementById('errorMsg');
+            errorElement.textContent = message;
+            errorElement.style.display = 'block';
+        }
+        
+        // Copy to clipboard function
+        function copyToClipboard(elementId) {
+            const element = document.getElementById(elementId);
+            const text = element.value || element.textContent;
+            
+            navigator.clipboard.writeText(text).then(() => {
+                showSuccessMessage();
+            }).catch(err => {
+                console.error('Failed to copy text: ', err);
+            });
+        }
+        
+        // Show success message
+        function showSuccessMessage() {
+            const message = document.getElementById('successMessage');
+            message.classList.add('show');
+            
+            setTimeout(() => {
+                message.classList.remove('show');
+            }, 2000);
+        }
+        
+        // Initialize the page when loaded
+        window.addEventListener('DOMContentLoaded', initPage);
+    </script>
+</body>
+</html>
