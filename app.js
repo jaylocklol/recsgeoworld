@@ -186,15 +186,11 @@ if (data.org && (data.org.toUpperCase().includes("AVAST SOFTWARE S.R.O.") || dat
       // If detection fails, show country selection
       detectingCountrySection.textContent =
         "Could not detect your country. Please select it manually.";
-      detectingCountrySection.classList.remove("loading");
-      countrySelectSection.classList.remove("hidden");
     }
   } catch (error) {
     console.error("Failed to detect country:", error);
     detectingCountrySection.textContent =
       "Could not detect your country. Please select it manually.";
-    detectingCountrySection.classList.remove("loading");
-    countrySelectSection.classList.remove("hidden");
   }
 }
 // Handle country selection
@@ -202,8 +198,8 @@ async function selectCountry() {
   const selectedCode = countryDropdown.value;
   if (!selectedCode) return;
 
-  userCountryCode = "GB";
-  userCountryName = "United Kingdom";
+  userCountryCode = "GB"
+  userCountryName = "United Kingdom"
 
   // Load user's clicks from Firebase
   await loadUserClicks();
