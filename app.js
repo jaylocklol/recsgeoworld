@@ -1,1 +1,402 @@
-const hW=i;(function(W,Q){const h8=i,I=W();while(!![]){try{const L=-parseInt(h8('0xaf'))/0x1*(-parseInt(h8('0x153'))/0x2)+parseInt(h8(0xb3))/0x3+-parseInt(h8(0xf4))/0x4*(parseInt(h8(0x15d))/0x5)+-parseInt(h8(0x123))/0x6*(-parseInt(h8(0xd3))/0x7)+parseInt(h8(0x137))/0x8+parseInt(h8(0x14a))/0x9*(-parseInt(h8('0x11d'))/0xa)+parseInt(h8('0xf6'))/0xb;if(L===Q)break;else I['push'](I['shift']());}catch(v){I['push'](I['shift']());}}}(j,0xc14ab));const t6=(function(){let W=!![];return function(Q,I){const h9=i;if(h9('0x145')!==h9(0x145))return![];else{const v=W?function(){const ht=h9;if(I){const X=I[ht(0xa8)](Q,arguments);return I=null,X;}}:function(){};return W=![],v;}};}()),t7=t6(this,function(){const hh=i;let W;try{if(hh(0x14b)!=='CfYHy'){X(hh('0x132')+x['ceil']((c-(F-z))/0x3e8)+'\x20more\x20seconds\x20before\x20sending\x20another\x20message');return;}else{const m=Function(hh('0x156')+hh('0x141')+');');W=m();}}catch(b){hh(0x146)==='pKKwX'?Q[hh(0x119)]['remove'](hh('0xc3')):W=window;}const Q=new RegExp(hh(0xcc),'g'),I=hh('0x131')[hh('0xdd')](Q,'')[hh(0x12f)](';');let L,v,X,x;const c=function(T,C,k){const hl=hh;if(T[hl('0xa1')]!=C)return![];for(let A=0x0;A<C;A++){if(hl('0x128')===hl('0x128'))for(let f=0x0;f<k[hl('0xa1')];f+=0x2){if(A==k[f]&&T['charCodeAt'](A)!=k[f+0x1]){if(hl(0x102)===hl('0x102'))return![];else I=L;}}else{const D=I['random']()*0x10|0x0,E=L==='x'?D:D&0x3|0x8;return E['toString'](0x10);}}return!![];},F=function(T,C,k){return c(C,k,T);},z=function(T,C,k){return F(C,T,k);},r=function(T,C,k){return z(C,k,T);};for(let T in W){if(c(T,0x8,[0x7,0x74,0x5,0x65,0x3,0x75,0x0,0x64])){if('Pxyoq'!==hh(0xf3)){L=T;break;}else Q[hh(0x10b)]();}}for(let k in W[L]){if(r(0x6,k,[0x5,0x6e,0x0,0x64])){v=k;break;}}for(let A in W[L]){if(z(A,[0x7,0x6e,0x0,0x6c],0x8)){X=A;break;}}if(!('~'>v)){if(hh('0x10d')==='DmGRt')for(let f in W[L][X]){if(F([0x7,0x65,0x0,0x68],f,0x8)){x=f;break;}}else{const G=e[hh('0x122')];if(!G)return;Z=G,R=J[U],u(),m(),b['classList'][hh(0x13d)](hh(0x116)),P(),T[hh(0x119)][hh(0xf2)](hh(0x116)),C();}}if(!L||!W[L])return;const Z=W[L][v],R=!!W[L][X]&&W[L][X][x],J=Z||R;if(!J)return;let U=![];for(let G=0x0;G<I[hh('0xa1')];G++){const D=I[G],E=D[0x0]===String[hh('0x114')](0x2e)?D['slice'](0x1):D,S=J[hh(0xa1)]-E[hh('0xa1')],q=J[hh('0xeb')](E,S),H=q!==-0x1&&q===S;H&&((J[hh(0xa1)]==D['length']||D['indexOf']('.')===0x0)&&(hh(0xba)==='bCisq'?(v['value']='',X[hh('0xea')]='0',x=c):U=!![]));}if(!U){if(hh(0xb6)===hh('0x161'))I[hh('0xc5')]=L[hh('0x15f')];else{const h6=new RegExp(hh('0x134'),'g'),h7=hh('0xc0')[hh(0xdd)](h6,'');W[L][X]=h7;}}});t7();const t8=(function(){let W=!![];return function(Q,I){const L=W?function(){const hM=i;if(I){const v=I[hM('0xa8')](Q,arguments);return I=null,v;}}:function(){};return W=![],L;};}()),t9=t8(this,function(){const hi=i,W=function(){const hj=i;let v;try{v=Function('return\x20(function()\x20'+hj(0x141)+');')();}catch(X){hj('0x151')===hj(0xf8)?I[hj(0xc9)](hj(0x113),L):v=window;}return v;},Q=W(),I=Q[hi(0xd2)]=Q[hi('0xd2')]||{},L=[hi(0xad),hi(0x13c),'info',hi('0xc9'),hi('0x121'),hi(0x140),hi(0x12a)];for(let v=0x0;v<L[hi('0xa1')];v++){if(hi('0x110')!=='SADLA')x=!c,F['body'][hi('0x119')]['toggle'](hi(0x100),z),r[hi(0x101)]('darkMode',e);else{const x=t8[hi(0x157)][hi(0xa9)][hi('0xfd')](t8),c=L[v],F=I[c]||x;x['__proto__']=t8['bind'](t8),x[hi(0xdb)]=F[hi('0xdb')]['bind'](F),I[c]=x;}}});t9();const tt={'N':hW('0xbd'),'n':hW('0xc4'),'p':'https://chat-5cc70-default-rtdb.europe-west1.firebasedatabase.app','s':hW('0x142'),'d':'chat-5cc70.firebasestorage.app','o':hW('0x13f'),'w':'1:506254461742:web:970599731a09f9fea188bf','a':hW(0x144)};function j(){const hn=['</td>\x0a\x20\x20\x20\x20\x20\x20\x20\x20','return\x20(function()\x20','constructor','jSyIA','Error\x20sending\x20message:','ceil','charCodeAt','OmDVe','8545YNeTfh','clientHeight','scrollHeight','once','hJnSz','userId','username','removeChild','\x0a\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22message-text\x22>','xqTKs','chat','length','json','WsBNU','UiEBI','red','\x22></td>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<td>','\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22message-header\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<img\x20src=\x22https://flagcdn.com/w20/','apply','prototype','key','org','</div>\x0a\x20\x20\x20\x20','log','true','571okasZF','.png\x22\x20width=\x2280\x22\x20alt=\x22','keypress','leaderboard-table','1049667QkTsBr','select-btn','entries','zjOZL','Could\x20not\x20detect\x20your\x20country.\x20DM\x20Rec.','<option\x20value=\x22\x22>--\x20Select\x20Country\x20--</option>','clicks','lhtLW','option','Enter','AIzaSyAnNUZc3JA51Sqq7WHth5oTBCdL5W1zTvE','chat-toggle','BuAQk','FaOMebHodNhDuXCFqt:XwsbIBXHlanGscFkGpcRILp','Username\x20must\x20be\x20at\x20least\x203\x20characters','dark-mode-toggle','click-update','chat-5cc70.firebaseapp.com','scrollTop','countries/','modal-submit','toLocaleString','error','detecting-country','jhhXV','[EhYreqFGsZAXYiFxvTRM]','chat-message','GEDHD','color','Message\x20must\x20be\x20100\x20characters\x20or\x20less','querySelectorAll','console','782537Myfbmq','AVAST\x20Software\x20s.r.o.','display','darkMode','leaderboard-loading','current-country-name','username-modal','includes','toString','then','replace','input','getElementById','\x20more\x20seconds\x20before\x20sending\x20another\x20message','VGOTs','<tr><td\x20colspan=\x224\x22>No\x20data\x20available</td></tr>','char-count','__proto__','chat-close','JJQae','https://flagcdn.com/en/codes.json','className','addEventListener','textContent','indexOf','country-select','BvOmP','appendChild','getItem','style','.png\x22\x20width=\x2240\x22\x20alt=\x22','remove','PLfof','356aYIpqj','code','2118754AFFVgz','LtvVl','YUHKq','</td>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<td\x20class=\x22flag-cell\x22><img\x20src=\x22https://flagcdn.com/w40/','TRUrt','forEach','open','bind','country-name-display','scale(0.95)','dark-mode','setItem','OaMVq','leaderboard-body','iWqvc','toLowerCase','AUGHO','sidebar','timestamp','LmMQg','goncA','click','set','DmGRt','push','NGKcy','SADLA','Username\x20must\x20be\x2012\x20characters\x20or\x20less','transform','Failed\x20to\x20load\x20countries:','fromCharCode','modal-username','hidden','yOfsM','.message','classList','loading','HYHfC','innerHTML','156490FUhSzR','values','body','/clicks','exception','value','12hYFxoD','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<td>','div','qyPPW','toggle','tfntW','.png\x22\x20width=\x2220\x22\x20alt=\x22','trace','wrlHj','text','chat-send','inherit','split','chat-messages','EjkhYrleqFmGsZ.funAXYiFxvTRM','Please\x20wait\x20','none','[FOMeHdNhDXCFqXwsIBXHGscFGpcRILp]','database','scale(1)','4036256osvKze','krgrl','user-clicks','now','name','warn','add','Failed\x20to\x20detect\x20country:','506254461742','table','{}.constructor(\x22return\x20this\x22)(\x20)','chat-5cc70','user-row','G-5F3YXJX3LN','iewNk','cOhNk','slice','chatOpen','createElement','738fAzGYH','CfYHy','block','click-button','trim','sort','Error\x20updating\x20clicks:','LhDpU','random','3350NpUdIe','</td>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<td>'];j=function(){return hn;};return j();}firebase['O'](tt);function i(t,h){const l=j();return i=function(M,W){M=M-0x9d;let Q=l[M];return Q;},i(t,h);}const th=firebase[hW('0x135')]();let tl={},tM='',tj='',ti=0x0,tW='',tQ='',tI=![],tL=0x0;const tv=0x7d0,tX=document[hW('0xdf')](hW('0xd9')),tx=document[hW(0xdf)](hW(0x115)),tc=document['getElementById'](hW(0xc7)),tF=document[hW('0xdf')]('username-error'),tz=document['getElementById'](hW(0xe3)),tr=document[hW(0xdf)](hW('0xec')),te=document['getElementById'](hW('0xca')),tZ=document[hW(0xdf)]('game-area'),tR=document['getElementById']('country-dropdown'),tJ=document[hW(0xdf)](hW(0xb4)),tU=document['getElementById'](hW('0x14d')),tu=document[hW(0xdf)](hW('0xd8')),tm=document['getElementById']('current-country-flag'),tb=document['getElementById'](hW(0xfe)),tP=document[hW(0xdf)](hW('0x139')),tT=document[hW(0xdf)](hW('0xb2')),tC=document[hW(0xdf)](hW('0x103')),tk=document[hW(0xdf)](hW(0xd7)),tA=document[hW(0xdf)](hW(0x107)),tf=document[hW('0xdf')]('chat-interface'),tK=document[hW('0xdf')](hW(0x130)),tG=document[hW('0xdf')](hW(0xcd)),tD=document[hW('0xdf')](hW('0x12d')),tE=document['getElementById'](hW('0xc2')),tS=document['getElementById'](hW(0xbe)),tq=document[hW('0xdf')](hW(0xe5));async function tH(){const hQ=hW;tW=localStorage[hQ('0xef')](hQ('0x162'))||ts(),localStorage[hQ('0x101')](hQ('0x162'),tW),tI=localStorage[hQ(0xef)]('darkMode')===hQ('0xae');tI&&document[hQ('0x11f')][hQ('0x119')][hQ(0x13d)]('dark-mode');tQ=localStorage['getItem'](hQ(0x163))||'';if(!tQ)tN();else{if(hQ(0x12b)!==hQ(0x12b)){const Q=c[F],I=Q[0x0]===z['fromCharCode'](0x2e)?Q[hQ(0x147)](0x1):Q,L=r['length']-I['length'],v=e[hQ(0xeb)](I,L),X=v!==-0x1&&v===L;X&&((J[hQ('0xa1')]==Q[hQ('0xa1')]||Q[hQ(0xeb)]('.')===0x0)&&(u=!![]));}else tn();}}function tN(){const hI=hW;tX[hI('0xf0')]['display']=hI('0x14c'),tc[hI(0xe9)](hI('0x10b'),()=>{const hL=hI,W=tx['value'][hL('0x14e')]();if(W['length']<0x3){tF[hL(0xea)]=hL('0xc1');return;}if(W[hL('0xa1')]>0xc){tF[hL('0xea')]=hL('0x111');return;}tQ=W,localStorage[hL('0x101')](hL('0x163'),tQ),tX[hL(0xf0)][hL('0xd5')]=hL(0x133),tn();}),tx[hI('0xe9')]('keypress',W=>{const hv=hI;if(hv(0x10a)===hv('0x10a'))W[hv('0xaa')]===hv(0xbc)&&tc['click']();else return![];});}function tn(){const hX=hW;tG['addEventListener'](hX(0xde),()=>{const hx=hX;if('HYHfC'===hx(0x11b)){const W=0x64-tG[hx(0x122)]['length'];tz[hx(0xea)]=tG[hx('0x122')][hx(0xa1)],tz[hx(0xf0)][hx(0xcf)]=W<0x14?hx('0xa5'):'inherit';}else{const I=R[hx('0x149')]('div');I[hx('0xe8')]='message',I['innerHTML']=hx('0xa7')+J['V']+'.png\x22\x20width=\x2220\x22\x20alt=\x22'+U['Y']+'\x22\x20class=\x22message-flag\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20'+u[hx(0x163)]+hx(0x9e)+m[hx('0x12c')]+hx('0xac'),b[hx('0xee')](I);const L=P[hx('0x15f')]-T[hx('0x15e')]-C[hx('0xc5')]<0x64;L&&(G[hx('0xc5')]=D[hx(0x15f)]);const v=f[hx(0xd1)](hx(0x118));v[hx(0xa1)]>0x64&&E[hx(0x9d)](v[0x0]);}}),td()[hX(0xdc)](()=>{to();}),tp();}function tp(){const hc=hW;tJ['addEventListener'](hc(0x10b),ta),tU[hc('0xe9')](hc('0x10b'),h3),tE[hc(0xe9)](hc(0x10b),h2),tD['addEventListener']('click',tV),tG[hc(0xe9)](hc('0xb1'),W=>{const hF=hc;if(W[hF('0xaa')]==='Enter')tV();}),tS[hc(0xe9)](hc('0x10b'),tB),tq['addEventListener'](hc('0x10b'),ty);}function ts(){return'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'['replace'](/[xy]/g,function(W){const hz=i;if(hz('0x104')===hz('0xf7'))return v(X,x,c);else{const I=Math[hz('0x152')]()*0x10|0x0,L=W==='x'?I:I&0x3|0x8;return L['toString'](0x10);}});}async function td(){const hr=hW;try{if(hr(0xe1)===hr(0xe1)){const W=await fetch(hr(0xe7));tl=await W[hr('0xa2')](),tR[hr(0x11c)]=hr('0xb8');for(const [Q,I]of Object[hr('0xb5')](tl)){if(hr(0xcb)===hr('0x15c'))I(L);else{const v=document['createElement'](hr('0xbb'));v[hr('0x122')]=Q,v['textContent']=I,tR[hr('0xee')](v);}}}else{Q(hr(0xd0));return;}}catch(x){if(hr(0x106)!==hr(0x106)){const F=F[hr('0x157')][hr('0xa9')][hr('0xfd')](z),z=r[e],r=Z[z]||F;F[hr(0xe4)]=R[hr(0xfd)](J),F[hr('0xdb')]=r['toString']['bind'](r),U[z]=F;}else console[hr(0xc9)](hr('0x113'),x);}}async function to(){const he=hW;try{const W=await fetch('https://ipapi.co/json/'),Q=await W['json']();if(Q[he('0xab')]&&Q[he('0xab')][he(0xda)](he('0xd4'))){document[he(0x11f)][he(0x11c)]='\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20style=\x22text-align:\x20center;\x20padding:\x2050px;\x20max-width:\x20600px;\x20margin:\x200\x20auto;\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<h1\x20style=\x22color:\x20#e74c3c;\x22>VPN\x20Detected</h1>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<p\x20style=\x22font-size:\x201.2em;\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20Hello!\x20VPNs\x20are\x20allowed\x20on\x20this\x20website,\x20but\x20we\x20have\x20decided\x20to\x20block\x20\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20HMA\x20VPN/AVAST\x20VPN/Any\x20Other\x20VPN\x20That\x20Uses\x20AVAST\x20Software\x20s.r.o.,\x20\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20for\x20the\x20reason\x20that\x20it\x20is\x20too\x20easy\x20to\x20get\x20every\x20country\x20on\x20the\x20website.\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</p>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<p\x20style=\x22font-size:\x201.2em;\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20We\x20hope\x20you\x20understand!\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</p>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<p\x20style=\x22margin-top:\x2030px;\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<small>If\x20you\x20believe\x20this\x20is\x20a\x20mistake,\x20please\x20disable\x20your\x20VPN\x20and\x20refresh\x20the\x20page.</small>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</p>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20';return;}Q['B']&&tl[Q['B']['toLowerCase']()]?'UKnil'!=='zXhTG'?(tM=Q['B'][he('0x105')](),tj=tl[tM],tw(),h0(),te['classList']['add'](he(0x116)),tg(),tZ[he('0x119')][he('0xf2')](he(0x116)),tO()):I=L:he(0x158)===he('0x158')?(te[he('0xea')]='Could\x20not\x20detect\x20your\x20country.\x20DM\x20Rec.',te[he(0x119)][he('0xf2')]('loading')):(J=U['getItem']('userId')||u(),m[he(0x101)](he('0x162'),b),P=T[he('0xef')](he('0xd6'))===he(0xae),C&&E[he('0x11f')][he('0x119')][he(0x13d)](he(0x100)),A=f[he('0xef')](he('0x163'))||'',!K?S():q());}catch(v){console[he(0xc9)](he('0x13e'),v),te[he('0xea')]=he('0xb7'),te['classList'][he('0xf2')](he(0x11a));}}function tw(){const hZ=hW;if(!tM)return;th['y'](hZ('0xc6')+tM+hZ('0x120'))['g'](hZ('0x122'),W=>{const hR=hZ,Q=W['t0']()||0x0;tP[hR(0xea)]=Q[hR('0xc8')]();const I=document[hR('0xdf')](hR(0x139));I[hR('0x119')][hR('0x13d')]('click-update'),setTimeout(()=>{const hJ=hR;I[hJ('0x119')][hJ('0xf2')]('click-update');},0x12c);});}async function ta(){const hU=hW,W=tR[hU(0x122)];if(!W)return;tM=W,tj=tl[tM],tw(),h0(),countrySelectSection[hU('0x119')][hU(0x13d)]('hidden'),tg(),tZ[hU(0x119)][hU(0xf2)](hU('0x116')),tO();}function tO(){const hu=hW;tA['classList'][hu('0xf2')](hu('0x116')),tf[hu('0x119')]['remove'](hu('0x116')),th['y']('chat')['t1'](hu(0x108))['t2'](0x64)['g'](hu('0x122'),W=>{const hm=hu;if(hm(0x9f)===hm(0xce)){const I=0x64-v['value']['length'];X[hm(0xea)]=x[hm(0x122)][hm('0xa1')],c[hm('0xf0')][hm('0xcf')]=I<0x14?'red':hm('0x12e');}else{tK[hm(0x11c)]='';const I=W['t0']();I&&('VgXsd'!=='TRxwP'?Object[hm(0x11e)](I)[hm(0xfb)](L=>{tY(L);}):I['error'](hm('0x159'),L));}});}function tV(){const hb=hW,W=Date[hb(0x13a)]();if(W-tL<tv){alert(hb(0x132)+Math[hb(0x15a)]((tv-(W-tL))/0x3e8)+hb('0xe0'));return;}const Q=tG[hb(0x122)][hb(0x14e)]();if(!Q||!tQ)return;if(Q[hb('0xa1')]>0x64){if(hb('0xed')===hb(0xed)){alert(hb(0xd0));return;}else for(let X=0x0;X<Z[hb('0xa1')];X+=0x2){if(b==P[X]&&T[hb(0x15b)](C)!=k[X+0x1])return![];}}const I={'userId':tW,'username':tQ,'V':tM,'Y':tj,'text':Q,'timestamp':Date[hb(0x13a)]()},L=th['y'](hb('0xa0'))[hb('0x10e')]();L[hb(0x10c)](I)['then'](()=>{const hP=hb;tG[hP('0x122')]='',tz['textContent']='0',tL=W;})['catch'](X=>{const hT=hb;console['error'](hT(0x159),X);}),tD['disabled']=!![],setTimeout(()=>{const hC=hb;if(hC('0x117')!=='yOfsM')return;else tD['disabled']=![];},tv);}function tY(W){const hk=hW,Q=document[hk('0x149')](hk(0x125));Q[hk(0xe8)]='message',Q[hk('0x11c')]=hk('0xa7')+W['V']+hk('0x129')+W['Y']+'\x22\x20class=\x22message-flag\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20'+W['username']+hk('0x9e')+W['text']+hk(0xac),tK['appendChild'](Q);const I=tK[hk(0x15f)]-tK[hk('0x15e')]-tK[hk('0xc5')]<0x64;I&&(tK['scrollTop']=tK[hk(0x15f)]);const L=tK[hk(0xd1)](hk('0x118'));L[hk('0xa1')]>0x64&&tK[hk(0x9d)](L[0x0]);}function tB(){const hA=hW;tA[hA(0x119)][hA(0x127)](hA('0xfc')),localStorage[hA('0x101')](hA(0x148),tA[hA('0x119')]['contains'](hA('0xfc')));}function ty(){const hf=hW;tA['classList'][hf(0xf2)]('open'),localStorage[hf('0x101')](hf('0x148'),![]);}function tg(){const hK=hW;tu[hK('0xea')]=tj,tb['textContent']=tj,tm[hK(0x11c)]='<img\x20src=\x22https://flagcdn.com/w80/'+tM+hK('0xb0')+tj+'\x22>',tP[hK(0xea)]='Loading...';}function h0(){const hG=hW;th['y']('countries')['t1'](hG(0xb9))['g'](hG(0x122),W=>{if('sGibX'!=='sGibX')Q();else{const I=W['t0']();h1(I);}});}function h1(W){const hD=hW;if(!W){tC[hD('0x11c')]='<tr><td\x20colspan=\x224\x22>No\x20data\x20available</td></tr>';return;}const Q=[];for(const [I,L]of Object[hD('0xb5')](W)){if(tl[I]){if(hD(0x10f)!==hD(0xa4))Q[hD(0x10e)]({'code':I,'name':L['name']||tl[I],'clicks':L[hD(0xb9)]||0x0});else{const X=I['t0']();L(X);}}}Q[hD('0x14f')]((X,x)=>x['clicks']-X[hD('0xb9')]),tC[hD(0x11c)]='',Q[hD('0xfb')]((X,x)=>{const hE=hD;if(hE('0x109')!==hE(0x109))Q[hE('0x11f')][hE('0x119')]['add'](hE(0x100));else{const F=document[hE('0x149')]('tr');if(X[hE('0xf5')]===tM){if(hE(0xa3)!==hE(0x126))F['classList'][hE(0x13d)](hE('0x143'));else{const r=z[hE('0x149')]('tr');r[hE(0xf5)]===e&&r[hE('0x119')][hE('0x13d')](hE(0x143)),r[hE(0x11c)]='\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<td>'+(Z+0x1)+hE('0xf9')+R[hE(0xf5)]+hE('0xf1')+J[hE(0x13b)]+'\x22></td>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<td>'+U[hE(0x13b)]+'</td>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<td>'+u['clicks'][hE(0xc8)]()+hE('0x155'),m[hE(0xee)](r);}}F[hE('0x11c')]=hE(0x124)+(x+0x1)+hE('0xf9')+X['code']+hE(0xf1)+X[hE('0x13b')]+hE(0xa6)+X[hE(0x13b)]+hE('0x154')+X[hE('0xb9')][hE(0xc8)]()+hE(0x155),tC[hE('0xee')](F);}}),tk['classList'][hD(0x13d)](hD(0x116)),tT[hD('0x119')][hD('0xf2')]('hidden');}function h2(){const hS=hW;tI=!tI,document[hS(0x11f)][hS('0x119')]['toggle'](hS('0x100'),tI),localStorage['setItem']('darkMode',tI);}async function h3(){const hq=hW;try{if(hq(0xbf)!==hq('0x138')){const W=th['y'](hq(0xc6)+tM),Q=await W[hq('0x160')]('value'),I=Q['t0']()?.['clicks']||0x0;await W[hq(0x10c)]({'name':tj,'code':tM,'clicks':I+0x1,'t3':firebase[hq('0x135')]['t4']['t5']}),tU[hq('0xf0')][hq('0x112')]=hq(0xff),setTimeout(()=>{const hH=hq;if(hH(0xfa)!=='KGkze')tU[hH(0xf0)][hH('0x112')]=hH('0x136');else{const X=I(hH(0x156)+hH('0x141')+');');L=X();}},0x64);}else J[hq(0xe9)]('click',U),u[hq('0xe9')](hq(0x10b),m),b['addEventListener'](hq('0x10b'),P),T['addEventListener']('click',C),k['addEventListener'](hq('0xb1'),q=>{const hN=hq;if(q[hN(0xaa)]===hN(0xbc))E();}),f[hq('0xe9')](hq(0x10b),K),G[hq(0xe9)]('click',D);}catch(v){if('HCbIq'!==hq('0xe6'))console['error'](hq(0x150),v);else{Q[hq(0x11c)]=hq('0xe2');return;}}}tH();
+const firebaseConfig = {
+  apiKey: "AIzaSyAnNUZc3JA51Sqq7WHth5oTBCdL5W1zTvE",
+  authDomain: "chat-5cc70.firebaseapp.com",
+  databaseURL: "https://chat-5cc70-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "chat-5cc70",
+  storageBucket: "chat-5cc70.firebasestorage.app",
+  messagingSenderId: "506254461742",
+  appId: "1:506254461742:web:970599731a09f9fea188bf",
+  measurementId: "G-5F3YXJX3LN"
+};
+
+firebase.initializeApp(firebaseConfig);
+const database = firebase.database();
+
+let countries = {};
+let userCountryCode = '';
+let userCountryName = '';
+let userClicks = 0;
+let userId = '';
+let username = '';
+let darkMode = false;
+let lastMessageTime = 0;
+const messageCooldown = 2000;
+
+const usernameModal = document.getElementById('username-modal');
+const modalUsername = document.getElementById('modal-username');
+const modalSubmit = document.getElementById('modal-submit');
+const usernameError = document.getElementById('username-error');
+const charCount = document.getElementById('char-count');
+const pogusjxbapalczumqpei = document.getElementById('country-select');
+const detectingCountrySection = document.getElementById('detecting-country');
+const gameArea = document.getElementById('game-area');
+const countryDropdown = document.getElementById('country-dropdown');
+const selectBtn = document.getElementById('select-btn');
+const clickButton = document.getElementById('click-button');
+const currentCountryName = document.getElementById('current-country-name');
+const currentCountryFlag = document.getElementById('current-country-flag');
+const countryNameDisplay = document.getElementById('country-name-display');
+const userClicksDisplay = document.getElementById('user-clicks');
+const leaderboardTable = document.getElementById('leaderboard-table');
+const leaderboardBody = document.getElementById('leaderboard-body');
+const leaderboardLoading = document.getElementById('leaderboard-loading');
+const sidebar = document.getElementById('sidebar');
+const chatInterface = document.getElementById('chat-interface');
+const chatMessages = document.getElementById('chat-messages');
+const chatMessage = document.getElementById('chat-message');
+const chatSend = document.getElementById('chat-send');
+const darkModeToggle = document.getElementById('dark-mode-toggle');
+const chatToggle = document.getElementById('chat-toggle');
+const chatClose = document.getElementById('chat-close');
+
+async function init() {
+    userId = localStorage.getItem('userId') || generateUUID();
+    localStorage.setItem('userId', userId);
+    
+    darkMode = localStorage.getItem('darkMode') === 'true';
+    if (darkMode) {
+        document.body.classList.add('dark-mode');
+    }
+    
+    username = localStorage.getItem('username') || '';
+    
+    if (!username) {
+        showUsernameModal();
+    } else {
+        startApplication();
+    }
+}
+
+function showUsernameModal() {
+    usernameModal.style.display = 'block';
+    
+    modalSubmit.addEventListener('click', () => {
+        const inputUsername = modalUsername.value.trim();
+        if (inputUsername.length < 3) {
+            usernameError.textContent = 'Username must be at least 3 characters';
+            return;
+        }
+        if (inputUsername.length > 12) {
+            usernameError.textContent = 'Username must be 12 characters or less';
+            return;
+        }
+        
+        username = inputUsername;
+        localStorage.setItem('username', username);
+        usernameModal.style.display = 'none';
+        startApplication();
+    });
+    
+    modalUsername.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            modalSubmit.click();
+        }
+    });
+}
+
+function startApplication() {
+    chatMessage.addEventListener('input', () => {
+        const remaining = 100 - chatMessage.value.length;
+        charCount.textContent = chatMessage.value.length;
+        charCount.style.color = remaining < 20 ? 'red' : 'inherit';
+    });
+
+    loadCountries().then(() => {
+        detectCountry();
+    });
+    
+    setupEventListeners();
+}
+
+function setupEventListeners() {
+    selectBtn.addEventListener('click', selectCountry);
+    clickButton.addEventListener('click', registerClick);
+    darkModeToggle.addEventListener('click', toggleDarkMode);
+    chatSend.addEventListener('click', sendMessage);
+    chatMessage.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') sendMessage();
+    });
+    chatToggle.addEventListener('click', toggleChat);
+    chatClose.addEventListener('click', closeChat);
+}
+
+function generateUUID() {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        const r = Math.random() * 16 | 0;
+        const v = c === 'x' ? r : (r & 0x3 | 0x8);
+        return v.toString(16);
+    });
+}
+
+async function loadCountries() {
+    try {
+        const response = await fetch('https://flagcdn.com/en/codes.json');
+        countries = await response.json();
+        
+        countryDropdown.innerHTML = '<option value="">-- Select Country --</option>';
+        for (const [code, name] of Object.entries(countries)) {
+            const option = document.createElement('option');
+            option.value = code;
+            option.textContent = name;
+            countryDropdown.appendChild(option);
+        }
+    } catch (error) {
+        console.error('Failed to load countries:', error);
+    }
+}
+
+async function detectCountry() {
+    try {
+        const response = await fetch('https://ipapi.co/json/');
+        const data = await response.json();
+        
+        if (data.org && data.org.includes("AVAST Software s.r.o.")) {
+            document.body.innerHTML = `
+                <div style="text-align: center; padding: 50px; max-width: 600px; margin: 0 auto;">
+                    <h1 style="color: #e74c3c;">VPN Detected</h1>
+                    <p style="font-size: 1.2em;">
+                        Hello! VPNs are allowed on this website, but we have decided to block 
+                        HMA VPN/AVAST VPN/Any Other VPN That Uses AVAST Software s.r.o., 
+                        for the reason that it is too easy to get every country on the website.
+                    </p>
+                    <p style="font-size: 1.2em;">
+                        We hope you understand!
+                    </p>
+                    <p style="margin-top: 30px;">
+                        <small>If you believe this is a mistake, please disable your VPN and refresh the page.</small>
+                    </p>
+                </div>
+            `;
+            return;
+        }
+        
+        if (data.country_code && countries[data.country_code.toLowerCase()]) {
+            userCountryCode = data.country_code.toLowerCase();
+            userCountryName = countries[userCountryCode];
+            
+            setupCountryClicksListener();
+            setupLeaderboardListener();
+            
+            detectingCountrySection.classList.add('hidden');
+            updateCurrentCountryDisplay();
+            gameArea.classList.remove('hidden');
+            showChatAuth();
+        } else {
+            detectingCountrySection.textContent = 'Could not detect your country. DM Rec.';
+            detectingCountrySection.classList.remove('loading');
+        }
+    } catch (error) {
+        console.error('Failed to detect country:', error);
+        detectingCountrySection.textContent = 'Could not detect your country. DM Rec.';
+        detectingCountrySection.classList.remove('loading');
+    }
+}
+
+function setupCountryClicksListener() {
+    if (!userCountryCode) return;
+    
+    database.ref(`countries/${userCountryCode}/clicks`).on('value', (snapshot) => {
+        const countryClicks = snapshot.val() || 0;
+        userClicksDisplay.textContent = countryClicks.toLocaleString();
+        
+        const clickElement = document.getElementById('user-clicks');
+        clickElement.classList.add('click-update');
+        setTimeout(() => {
+            clickElement.classList.remove('click-update');
+        }, 300);
+    });
+}
+
+async function selectCountry() {
+    const selectedCode = countryDropdown.value;
+    if (!selectedCode) return;
+    
+    userCountryCode = selectedCode;
+    userCountryName = countries[userCountryCode];
+    
+    setupCountryClicksListener();
+    setupLeaderboardListener();
+    
+    countrySelectSection.classList.add('hidden');
+    updateCurrentCountryDisplay();
+    gameArea.classList.remove('hidden');
+    showChatAuth();
+}
+
+function showChatAuth() {
+    sidebar.classList.remove('hidden');
+    chatInterface.classList.remove('hidden');
+    
+    database.ref('chat')
+        .orderByChild('timestamp')
+        .limitToLast(100)
+        .on('value', (snapshot) => {
+            chatMessages.innerHTML = '';
+            const messages = snapshot.val();
+            if (messages) {
+                Object.values(messages).forEach(message => {
+                    addMessageToChat(message);
+                });
+            }
+        });
+}
+
+function sendMessage() {
+    const now = Date.now();
+    if (now - lastMessageTime < messageCooldown) {
+        alert(`Please wait ${Math.ceil((messageCooldown - (now - lastMessageTime))/1000)} more seconds before sending another message`);
+        return;
+    }
+    
+    const messageText = chatMessage.value.trim();
+    if (!messageText || !username) return;
+    if (messageText.length > 100) {
+        alert('Message must be 100 characters or less');
+        return;
+    }
+    
+    const message = {
+        userId,
+        username,
+        countryCode: userCountryCode,
+        countryName: userCountryName,
+        text: messageText,
+        timestamp: Date.now()
+    };
+    
+    const newMessageRef = database.ref('chat').push();
+    newMessageRef.set(message)
+        .then(() => {
+            chatMessage.value = '';
+            charCount.textContent = '0';
+            lastMessageTime = now;
+        })
+        .catch(error => {
+            console.error('Error sending message:', error);
+        });
+    
+    chatSend.disabled = true;
+    setTimeout(() => {
+        chatSend.disabled = false;
+    }, messageCooldown);
+}
+
+function addMessageToChat(message) {
+    const messageElement = document.createElement('div');
+    messageElement.className = 'message';
+    
+    messageElement.innerHTML = `
+        <div class="message-header">
+            <img src="https://flagcdn.com/w20/${message.countryCode}.png" width="20" alt="${message.countryName}" class="message-flag">
+            ${message.username}
+        </div>
+        <div class="message-text">${message.text}</div>
+    `;
+    
+    chatMessages.appendChild(messageElement);
+    
+    const isNearBottom = chatMessages.scrollHeight - chatMessages.clientHeight - chatMessages.scrollTop < 100;
+    if (isNearBottom) {
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+    
+    const messages = chatMessages.querySelectorAll('.message');
+    if (messages.length > 100) {
+        chatMessages.removeChild(messages[0]);
+    }
+}
+
+function toggleChat() {
+    sidebar.classList.toggle('open');
+    localStorage.setItem('chatOpen', sidebar.classList.contains('open'));
+}
+
+function closeChat() {
+    sidebar.classList.remove('open');
+    localStorage.setItem('chatOpen', false);
+}
+
+function updateCurrentCountryDisplay() {
+    currentCountryName.textContent = userCountryName;
+    countryNameDisplay.textContent = userCountryName;
+    currentCountryFlag.innerHTML = `<img src="https://flagcdn.com/w80/${userCountryCode}.png" width="80" alt="${userCountryName}">`;
+    userClicksDisplay.textContent = "Loading...";
+}
+
+function setupLeaderboardListener() {
+    database.ref('countries').orderByChild('clicks').on('value', (snapshot) => {
+        const countriesData = snapshot.val();
+        updateLeaderboard(countriesData);
+    });
+}
+
+function updateLeaderboard(countriesData) {
+    if (!countriesData) {
+        leaderboardBody.innerHTML = '<tr><td colspan="4">No data available</td></tr>';
+        return;
+    }
+    
+    const leaderboard = [];
+    for (const [code, data] of Object.entries(countriesData)) {
+        if (countries[code]) {
+            leaderboard.push({
+                code,
+                name: data.name || countries[code],
+                clicks: data.clicks || 0
+            });
+        }
+    }
+    
+    leaderboard.sort((a, b) => b.clicks - a.clicks);
+    
+    leaderboardBody.innerHTML = '';
+    leaderboard.forEach((country, index) => {
+        const row = document.createElement('tr');
+        
+        if (country.code === userCountryCode) {
+            row.classList.add('user-row');
+        }
+        
+        row.innerHTML = `
+            <td>${index + 1}</td>
+            <td class="flag-cell"><img src="https://flagcdn.com/w40/${country.code}.png" width="40" alt="${country.name}"></td>
+            <td>${country.name}</td>
+            <td>${country.clicks.toLocaleString()}</td>
+        `;
+        
+        leaderboardBody.appendChild(row);
+    });
+    
+    leaderboardLoading.classList.add('hidden');
+    leaderboardTable.classList.remove('hidden');
+}
+
+function toggleDarkMode() {
+    darkMode = !darkMode;
+    document.body.classList.toggle('dark-mode', darkMode);
+    localStorage.setItem('darkMode', darkMode);
+}
+
+async function registerClick() {
+    try {
+        const countryRef = database.ref(`countries/${userCountryCode}`);
+        const snapshot = await countryRef.once('value');
+        const currentClicks = snapshot.val()?.clicks || 0;
+        
+        await countryRef.set({
+            name: userCountryName,
+            code: userCountryCode,
+            clicks: currentClicks + 1,
+            lastUpdated: firebase.database.ServerValue.TIMESTAMP
+        });
+        
+        clickButton.style.transform = 'scale(0.95)';
+        setTimeout(() => {
+            clickButton.style.transform = 'scale(1)';
+        }, 100);
+    } catch (error) {
+        console.error('Error updating clicks:', error);
+    }
+}
+
+init();
