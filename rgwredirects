@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Redirect Domains - 1990s Style</title>
+    <style>
+        body {
+            background-color: #c0c0c0;
+            font-family: "Comic Sans MS", "Arial", sans-serif;
+            color: #000000;
+            margin: 20px;
+        }
+        h1 {
+            color: #000080;
+            text-align: center;
+            font-size: 28px;
+            text-decoration: underline;
+        }
+        table {
+            background-color: #ffffff;
+            border: 3px solid #000000;
+            width: 80%;
+            margin: 0 auto;
+        }
+        th {
+            background-color: #000080;
+            color: #ffffff;
+            padding: 5px;
+            text-align: left;
+        }
+        td {
+            padding: 5px;
+            border-bottom: 1px solid #000000;
+        }
+        .disclaimer {
+            font-style: italic;
+            color: #ff0000;
+            text-align: center;
+            margin-top: 20px;
+        }
+        .blink {
+            animation: blink 1s step-end infinite;
+        }
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+        .counter {
+            text-align: center;
+            font-size: 12px;
+            color: #808080;
+        }
+    </style>
+</head>
+<body>
+
+    
+    <table>
+        <tr>
+            <th>Country</th>
+            <th>Flag</th>
+            <th>Redirect Domain</th>
+        </tr>
+        <tr>
+            <td>Ascension Island</td>
+            <td><img src="https://flagcdn.com/w20/sh.png" alt="Ascension Island flag"></td>
+            <td><a href="http://rgw.120v.ac">rgw.120v.ac</a></td>
+        </tr>
+        <tr>
+            <td>Niue</td>
+            <td><img src="https://flagcdn.com/w20/nu.png" alt="Niue flag"></td>
+            <td><a href="http://rgw.arkad.nu">rgw.arkad.nu</a></td>
+        </tr>
+        <tr>
+            <td>American Samoa</td>
+            <td><img src="https://flagcdn.com/w20/as.png" alt="American Samoa flag"></td>
+            <td><a href="http://rgw.notici.as">rgw.notici.as</a></td>
+        </tr>
+        <tr>
+            <td>British Indian Ocean Territory</td>
+            <td><img src="https://flagcdn.com/w20/io.png" alt="British Indian Ocean Territory flag"></td>
+            <td><a href="http://rgw.sentinam.io">rgw.sentinam.io</a></td>
+        </tr>
+        <tr>
+            <td>Turks and Caicos Islands</td>
+            <td><img src="https://flagcdn.com/w20/tc.png" alt="Turks and Caicos Islands flag"></td>
+            <td><a href="http://rgw.ix.tc">rgw.ix.tc</a></td>
+        </tr>
+    </table>
+    
+    <p class="disclaimer blink">⚠️ These redirects could be slow ⚠️</p>
+    
+    
+    <marquee behavior="scroll" direction="left" scrollamount="5">
+        Under Construction | Best viewed with Netscape Navigator | Last Updated: <script>document.write(new Date().toLocaleDateString());</script>
+    </marquee>
+</body>
+</html>
