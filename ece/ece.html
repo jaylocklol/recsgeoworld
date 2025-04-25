@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Global Visitor Map</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="dark-mode">
+    <div id="loading" class="loading">
+        <div class="spinner"></div>
+        <p>Checking your access...</p>
+    </div>
+
+    <div class="top-bar">
+        <div id="current-country" class="current-country">
+            <i class="fas fa-map-marker-alt"></i>
+            <span id="country-name">Loading...</span>
+        </div>
+        <div class="theme-toggle" id="theme-toggle">
+            <i class="fas fa-moon"></i>
+        </div>
+    </div>
+
+    <div id="flag-container" class="flag-container"></div>
+
+    <div class="side-panel">
+        <div class="panel-tabs">
+            <button class="tab-button active" data-tab="leaderboard">
+                <i class="fas fa-trophy"></i>
+            </button>
+            <button class="tab-button" data-tab="chat">
+                <i class="fas fa-comments"></i>
+            </button>
+        </div>
+        
+        <div id="leaderboard" class="panel-content active">
+            <h2><i class="fas fa-crown"></i> Leaderboard</h2>
+            <div id="leaderboard-list" class="leaderboard-list"></div>
+        </div>
+        
+        <div id="chat" class="panel-content">
+            <div id="chat-messages" class="chat-messages"></div>
+            <div class="chat-input">
+                <input type="text" id="message-input" placeholder="Type a message...">
+                <button id="send-button"><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <div class="bottom-bar">
+        <div class="visitor-count">
+            <i class="fas fa-users"></i>
+            <span id="total-visitors">0</span> visitors
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
