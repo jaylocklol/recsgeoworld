@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IP Data Decoder</title>
+    <style>
+        :root {
+            --bg-color: #1a1a1a;
+            --text-color: #e0e0e0;
+            --card-bg: #2d2d2d;
+            --accent: #5865F2;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 800px;
+            width: 100%;
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            margin-top: 20px;
+        }
+        
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #fff;
+        }
+        
+        .input-box, .result-box {
+            background-color: rgba(0, 0, 0, 0.2);
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+        
+        .code-input, .code-output {
+            width: 100%;
+            padding: 10px;
+            background-color: rgba(0, 0, 0, 0.3);
+            border: 1px solid #444;
+            border-radius: 4px;
+            color: var(--text-color);
+            font-family: monospace;
+            min-height: 60px;
+            margin-bottom: 10px;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        
+        .btn:hover {
+            background-color: #4752C4;
+        }
+        
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .spinner {
+            border: 4px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            border-top: 4px solid var(--text-color);
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .status {
+            margin-top: 10px;
+            font-size: 0.9em;
+            min-height: 20px;
+        }
+        
+        .info-item {
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+        
+        .info-label {
+            font-weight: bold;
+            display: inline-block;
+            width: 120px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>IP Data Decoder</h1>
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p>Decrypting data...</p>
+        </div>
+        <div class="input-box">
+            <h3>Enter Encrypted Code:</h3>
+            <textarea class="code-input" id="codeInput" placeholder="Paste the encrypted code here..."></textarea>
+            <button class="btn" id="decodeBtn">Decode</button>
+            <div class="status" id="status"></div>
+        </div>
+        <div class="result-box" id="resultBox" style="display: none;">
+            <h3>Decoded Information:</h3>
+            <div id="decodedInfo"></div>
+        </div>
+    </div>
+
+    <script>
+        // Encryption key (same for both sites)
+        const ENCRYPTION_KEY = "eff04c21-0db9-4c63-af8a-da553018c796";
+        
+        document.getElementById('decodeBtn').addEventListener('click', async function() {
+            const loadingElement = document.getElementById('loading');
+            const statusElement = document.getElementById('status');
+            const resultBox = document.getElementById('resultBox');
+            const decodedInfo = document.getElementById('decodedInfo');
+            const codeInput = document.getElementById('codeInput').value.trim();
+            
+            if (!codeInput) {
+                statusElement.textContent = 'Please enter a code to decode';
+                statusElement.style.color = '#F44336';
+                return;
+            }
+            
+            loadingElement.style.display = 'block';
+            statusElement.textContent = '';
+            resultBox.style.display = 'none';
+            
+            try {
+                // Remove any flag suffix if present
+                let codeToDecrypt = codeInput;
+                if (codeInput.includes(':flag_')) {
+                    codeToDecrypt = codeInput.split(':flag_')[0];
+                }
+                
+                // Decrypt the data
+                statusElement.textContent = 'Decrypting data...';
+                const decryptedData = await decryptData(codeToDecrypt, ENCRYPTION_KEY);
+                
+                // Parse the decrypted data
+                const [ip, score, reasons] = decryptedData.split(':');
+                const reasonList = reasons.split(',');
+                
+                // Display the results
+                let infoHTML = `
+                    <div class="info-item"><span class="info-label">IP Address:</span> ${ip}</div>
+                    <div class="info-item"><span class="info-label">VPN Probability:</span> ${score}%</div>
+                    <div class="info-item"><span class="info-label">Risk Factors:</span></div>
+                    <ul>
+                `;
+                
+                reasonList.forEach(reason => {
+                    if (reason) {
+                        if (reason.startsWith('risk_score=')) {
+                            infoHTML += `<li>Risk Score: ${reason.split('=')[1]}</li>`;
+                        } else {
+                            infoHTML += `<li>${reason.replace(/_/g, ' ')}</li>`;
+                        }
+                    }
+                });
+                
+                if (reasonList.length === 0 || (reasonList.length === 1 && !reasonList[0])) {
+                    infoHTML += `<li>No significant risk factors detected</li>`;
+                }
+                
+                infoHTML += `</ul>`;
+                
+                decodedInfo.innerHTML = infoHTML;
+                loadingElement.style.display = 'none';
+                resultBox.style.display = 'block';
+                statusElement.textContent = 'Decryption successful';
+                statusElement.style.color = '#4CAF50';
+                
+            } catch (error) {
+                loadingElement.style.display = 'none';
+                statusElement.textContent = `Error: ${error.message}`;
+                statusElement.style.color = '#F44336';
+                console.error(error);
+            }
+        });
+        
+        async function decryptData(encryptedBase64, password) {
+            // Convert Base64 to Uint8Array
+            const binaryString = atob(encryptedBase64);
+            const bytes = new Uint8Array(binaryString.length);
+            for (let i = 0; i < binaryString.length; i++) {
+                bytes[i] = binaryString.charCodeAt(i);
+            }
+            
+            // Extract salt, iv, and ciphertext
+            const salt = bytes.slice(0, 16);
+            const iv = bytes.slice(16, 28);
+            const ciphertext = bytes.slice(28);
+            
+            // Convert password to CryptoKey
+            const keyMaterial = await window.crypto.subtle.importKey(
+                'raw',
+                new TextEncoder().encode(password),
+                { name: 'PBKDF2' },
+                false,
+                ['deriveKey']
+            );
+            
+            // Derive encryption key
+            const key = await window.crypto.subtle.deriveKey(
+                {
+                    name: 'PBKDF2',
+                    salt: salt,
+                    iterations: 100000,
+                    hash: 'SHA-256'
+                },
+                keyMaterial,
+                { name: 'AES-GCM', length: 256 },
+                false,
+                ['decrypt']
+            );
+            
+            // Decrypt the data
+            const decrypted = await window.crypto.subtle.decrypt(
+                {
+                    name: 'AES-GCM',
+                    iv: iv
+                },
+                key,
+                ciphertext
+            );
+            
+            return new TextDecoder().decode(decrypted);
+        }
+    </script>
+</body>
+</html>
