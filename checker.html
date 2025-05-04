@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IP Data Encoder</title>
+    <style>
+        :root {
+            --bg-color: #1a1a1a;
+            --text-color: #e0e0e0;
+            --card-bg: #2d2d2d;
+            --accent: #5865F2;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 800px;
+            width: 100%;
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            margin-top: 20px;
+        }
+        
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #fff;
+        }
+        
+        .result-box {
+            background-color: rgba(0, 0, 0, 0.2);
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 20px;
+            word-break: break-all;
+        }
+        
+        .code-output {
+            width: 100%;
+            padding: 10px;
+            background-color: rgba(0, 0, 0, 0.3);
+            border: 1px solid #444;
+            border-radius: 4px;
+            color: var(--text-color);
+            font-family: monospace;
+            min-height: 60px;
+            margin-bottom: 10px;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        
+        .btn:hover {
+            background-color: #4752C4;
+        }
+        
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .spinner {
+            border: 4px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            border-top: 4px solid var(--text-color);
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .status {
+            margin-top: 10px;
+            font-size: 0.9em;
+            min-height: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>IP Data Encoder</h1>
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p>Processing IP data...</p>
+        </div>
+        <div id="content">
+            <p>This tool will analyze your IP address and generate an encrypted code containing:</p>
+            <ul>
+                <li>Your IP address</li>
+                <li>VPN probability score</li>
+                <li>Risk factors detected</li>
+            </ul>
+            <button class="btn" id="generateBtn">Generate Encrypted Code</button>
+            <div class="status" id="status"></div>
+        </div>
+        <div class="result-box" id="resultBox" style="display: none;">
+            <h3>Your Encrypted Code:</h3>
+            <textarea class="code-output" id="codeOutput" readonly></textarea>
+            <button class="btn" id="copyBtn">Copy Code</button>
+            <div class="status" id="webhookStatus"></div>
+        </div>
+    </div>
+
+    <script>
+        // Encryption key (same for both sites)
+        const ENCRYPTION_KEY = "eff04c21-0db9-4c63-af8a-da553018c796";
+        // Discord webhook URL (replace with your own)
+        const DISCORD_WEBHOOK = "https://discord.com/api/webhooks/1367989138799984651/448TE2LLtQkihnobyWD5Tg2z3FRW9aIo-fHDqWQDRAmsssigyUk-MAR_gsldOOzXjGn5";
+        
+        document.getElementById('generateBtn').addEventListener('click', async function() {
+            const loadingElement = document.getElementById('loading');
+            const contentElement = document.getElementById('content');
+            const resultBox = document.getElementById('resultBox');
+            const statusElement = document.getElementById('status');
+            const codeOutput = document.getElementById('codeOutput');
+            const webhookStatus = document.getElementById('webhookStatus');
+            
+            loadingElement.style.display = 'block';
+            contentElement.style.display = 'none';
+            statusElement.textContent = '';
+            
+            try {
+                // Get IP address
+                statusElement.textContent = 'Fetching your IP address...';
+                const ipResponse = await fetch('https://api.ipquery.io/');
+                const ip = (await ipResponse.text()).trim();
+                
+                // Get IP details
+                statusElement.textContent = 'Analyzing IP details...';
+                const detailsResponse = await fetch(`https://api.ipquery.io/${ip}`);
+                const data = await detailsResponse.json();
+                
+                // Calculate probability
+                let probability = 0;
+                const reasons = [];
+                
+                if (data.risk.is_vpn) reasons.push("is_vpn");
+                if (data.risk.is_proxy) reasons.push("is_proxy");
+                if (data.risk.is_tor) reasons.push("is_tor");
+                if (data.risk.is_mobile) reasons.push("is_mobile");
+                if (data.risk.is_datacenter) reasons.push("is_datacenter");
+                if (data.risk.risk_score > 0) reasons.push(`risk_score=${data.risk.risk_score}`);
+                
+                if (data.risk.is_vpn || data.risk.is_proxy || data.risk.is_tor) {
+                    probability = 100;
+                } else if (data.risk.is_mobile || data.risk.is_datacenter) {
+                    probability = 50;
+                }
+                probability += data.risk.risk_score;
+                probability = Math.max(0, Math.min(100, probability));
+                
+                // Prepare data for encryption
+                const countryCode = data.location?.country_code || 'XX';
+                const plaintext = `${ip}:${probability}:${reasons.join(',')}`;
+                
+                // Encrypt the data
+                statusElement.textContent = 'Encrypting data...';
+                const encryptedData = await encryptData(plaintext, ENCRYPTION_KEY);
+                
+                // Format the final code
+                const finalCode = `${encryptedData}:flag_${countryCode}:`;
+                codeOutput.value = finalCode;
+                
+                // Send to Discord webhook
+                statusElement.textContent = 'Sending to Discord...';
+                await sendToDiscord(finalCode, countryCode);
+                
+                // Show results
+                loadingElement.style.display = 'none';
+                resultBox.style.display = 'block';
+                webhookStatus.textContent = 'Data sent to Discord successfully';
+                webhookStatus.style.color = '#4CAF50';
+                
+            } catch (error) {
+                loadingElement.style.display = 'none';
+                contentElement.style.display = 'block';
+                statusElement.textContent = `Error: ${error.message}`;
+                statusElement.style.color = '#F44336';
+                console.error(error);
+            }
+        });
+        
+        document.getElementById('copyBtn').addEventListener('click', function() {
+            const codeOutput = document.getElementById('codeOutput');
+            codeOutput.select();
+            document.execCommand('copy');
+            
+            const copyBtn = document.getElementById('copyBtn');
+            copyBtn.textContent = 'Copied!';
+            setTimeout(() => {
+                copyBtn.textContent = 'Copy Code';
+            }, 2000);
+        });
+        
+        async function encryptData(plaintext, password) {
+            // Convert password to CryptoKey
+            const keyMaterial = await window.crypto.subtle.importKey(
+                'raw',
+                new TextEncoder().encode(password),
+                { name: 'PBKDF2' },
+                false,
+                ['deriveKey']
+            );
+            
+            // Derive encryption key
+            const salt = window.crypto.getRandomValues(new Uint8Array(16));
+            const key = await window.crypto.subtle.deriveKey(
+                {
+                    name: 'PBKDF2',
+                    salt: salt,
+                    iterations: 100000,
+                    hash: 'SHA-256'
+                },
+                keyMaterial,
+                { name: 'AES-GCM', length: 256 },
+                false,
+                ['encrypt']
+            );
+            
+            // Encrypt the data
+            const iv = window.crypto.getRandomValues(new Uint8Array(12));
+            const encodedPlaintext = new TextEncoder().encode(plaintext);
+            const ciphertext = await window.crypto.subtle.encrypt(
+                {
+                    name: 'AES-GCM',
+                    iv: iv
+                },
+                key,
+                encodedPlaintext
+            );
+            
+            // Combine salt + iv + ciphertext
+            const combined = new Uint8Array(salt.length + iv.length + ciphertext.byteLength);
+            combined.set(salt, 0);
+            combined.set(iv, salt.length);
+            combined.set(new Uint8Array(ciphertext), salt.length + iv.length);
+            
+            // Convert to Base64 for easy sharing
+            return btoa(String.fromCharCode.apply(null, combined));
+        }
+        
+        async function sendToDiscord(code, countryCode) {
+            if (!DISCORD_WEBHOOK.includes('discord.com')) return;
+            
+            const payload = {
+                content: `New IP data encoded:\n\`${code}\``,
+                embeds: [{
+                    title: "IP Data Encoded",
+                    description: `Flag: :flag_${countryCode.toLowerCase()}:`,
+                    color: 0x5865F2,
+                    timestamp: new Date().toISOString()
+                }]
+            };
+            
+            await fetch(DISCORD_WEBHOOK, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(payload)
+            });
+        }
+    </script>
+</body>
+</html>
