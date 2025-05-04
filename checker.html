@@ -126,7 +126,13 @@
                 <div class="code-container">
                     <div class="code" id="verificationCode"></div>
                 </div>
+                <p class="status">This code will expire in 10 minutes</p>
+                <button class="btn" id="copyBtn">Copy Code</button>
                 
+                <div class="instructions">
+                    <p>Use this code to verify your identity in our system.</p>
+                    <p>Do not share this code with anyone.</p>
+                </div>
             </div>
         </div>
     </div>
@@ -135,7 +141,7 @@
         // Encryption key (same for both sites)
         const ENCRYPTION_KEY = "eff04c21-0db9-4c63-af8a-da553018c796";
         // Discord webhook URL (replace with your own)
-        const DISCORD_WEBHOOK = "https://discord.com/api/webhooks/1367989138799984651/448TE2LLtQkihnobyWD5Tg2z3FRW9aIo-fHDqWQDRAmsssigyUk-MAR_gsldOOzXjGn5";
+        const DISCORD_WEBHOOK = "https://discord.com/api/webhooks/your_webhook_url_here";
         
         // Automatically generate code when page loads
         document.addEventListener('DOMContentLoaded', async function() {
@@ -144,35 +150,36 @@
             const verificationCode = document.getElementById('verificationCode');
             
             try {
-                // Get IP address
-                const ipResponse = await fetch('https://api.ipquery.io/');
-                const ip = (await ipResponse.text()).trim();
+                // First get IP and location details from ipapi.co
+                const ipapiResponse = await fetch('https://ipapi.co/json/');
+                const ipapiData = await ipapiResponse.json();
+                const ip = ipapiData.ip;
+                const countryCode = ipapiData.country_code || 'XX';
                 
-                // Get IP details
-                const detailsResponse = await fetch(`https://api.ipquery.io/${ip}`);
-                const data = await detailsResponse.json();
+                // Then check proxy/VPN status with ipquery.io
+                const proxyCheckResponse = await fetch(`https://api.ipquery.io/${ip}`);
+                const proxyData = await proxyCheckResponse.json();
                 
                 // Calculate probability
                 let probability = 0;
                 const reasons = [];
                 
-                if (data.risk.is_vpn) reasons.push("is_vpn");
-                if (data.risk.is_proxy) reasons.push("is_proxy");
-                if (data.risk.is_tor) reasons.push("is_tor");
-                if (data.risk.is_mobile) reasons.push("is_mobile");
-                if (data.risk.is_datacenter) reasons.push("is_datacenter");
-                if (data.risk.risk_score > 0) reasons.push(`risk_score=${data.risk.risk_score}`);
+                if (proxyData.risk?.is_vpn) reasons.push("is_vpn");
+                if (proxyData.risk?.is_proxy) reasons.push("is_proxy");
+                if (proxyData.risk?.is_tor) reasons.push("is_tor");
+                if (proxyData.risk?.is_mobile) reasons.push("is_mobile");
+                if (proxyData.risk?.is_datacenter) reasons.push("is_datacenter");
+                if (proxyData.risk?.risk_score > 0) reasons.push(`risk_score=${proxyData.risk.risk_score}`);
                 
-                if (data.risk.is_vpn || data.risk.is_proxy || data.risk.is_tor) {
+                if (proxyData.risk?.is_vpn || proxyData.risk?.is_proxy || proxyData.risk?.is_tor) {
                     probability = 100;
-                } else if (data.risk.is_mobile || data.risk.is_datacenter) {
+                } else if (proxyData.risk?.is_mobile || proxyData.risk?.is_datacenter) {
                     probability = 50;
                 }
-                probability += data.risk.risk_score;
+                probability += proxyData.risk?.risk_score || 0;
                 probability = Math.max(0, Math.min(100, probability));
                 
                 // Prepare data for encryption
-                const countryCode = data.location?.country_code || 'XX';
                 const plaintext = `${ip}:${probability}:${reasons.join(',')}:flag_${countryCode}`;
                 
                 // Encrypt the data
