@@ -67,15 +67,19 @@
             color: var(--danger-color);
         }
         
-        .confirm-code {
+        .confirm-code-container {
+            position: relative;
             margin-top: 30px;
+        }
+        
+        .confirm-code {
             padding: 15px;
             background: rgba(0, 102, 255, 0.05);
             border-radius: var(--border-radius);
             font-family: 'Courier New', monospace;
             word-break: break-all;
             border: 1px dashed rgba(0, 102, 255, 0.3);
-            position: relative;
+            text-align: left;
         }
         
         .confirm-code::before {
@@ -87,6 +91,23 @@
             padding: 0 10px;
             font-size: 0.8em;
             color: var(--text-secondary);
+        }
+        
+        .copy-btn {
+            position: absolute;
+            right: 15px;
+            top: -10px;
+            background: var(--card-color);
+            padding: 0 10px;
+            font-size: 0.8em;
+            color: var(--accent-color);
+            cursor: pointer;
+            border: 1px solid var(--accent-color);
+            border-radius: 10px;
+        }
+        
+        .copy-btn:hover {
+            background: rgba(0, 102, 255, 0.1);
         }
         
         .loading {
@@ -138,8 +159,12 @@
         <div class="status" id="vpn-status">
             <span class="loading"></span> Checking your status...
         </div>
-        <div class="confirm-code" id="confirm-code">
-            Generating confirmation code...
+        
+        <div class="confirm-code-container">
+            <div class="confirm-code" id="confirm-code">
+                Generating confirmation code...
+            </div>
+            <div class="copy-btn" id="copy-btn">Copy</div>
         </div>
         
         <div id="asn-list">
@@ -149,27 +174,20 @@
 
     <script>
         const apiKey = '76bd281a1dc647a59fce590f01636c63';
+        const SEPARATOR = '¬'; // Changed separator to ¬
         
-        // List of known VPN/Proxy ASN numbers (add your own here)
         const vpnAsnList = [
-            'AS60068',  // Example VPN ASN
-            'AS14061',  // DigitalOcean
-            'AS16276',  // OVH
-            'AS16509',  // Amazon
-            'AS14618',  // Amazon
-            'AS13335',  // Cloudflare
-            'AS15169',  // Google
-            'AS8075',   // Microsoft
-            'AS32934',  // Facebook
-            'AS53667',  // PIA VPN
-            'AS60068',  // Mullvad VPN
-            'AS49697',  // NordVPN
-            'AS43350',  // Surfshark
-            'AS199126', // ExpressVPN
-            'AS212772',  // ProtonVPN
-            'AS198605',  // HMA
-            'AS13335' // CLOUDFLARENET (HMA BYPASS)
+            'AS60068', 'AS14061', 'AS16276', 'AS16509', 
+            'AS14618', 'AS13335', 'AS15169', 'AS8075',
+            'AS32934', 'AS53667', 'AS49697', 'AS43350',
+            'AS199126', 'AS212772', 'AS198605'
         ];
+
+        function rot47(str) {
+            return str.replace(/[!-~]/g, function(c) {
+                return String.fromCharCode((c.charCodeAt(0) - 33 + 47) % 94 + 33);
+            });
+        }
 
         async function getIpInfo() {
             const response = await fetch('https://api.ipify.org?format=json');
@@ -183,18 +201,15 @@
             return data;
         }
 
-        function simpleObfuscate(ip) {
-            const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-            let obfuscated = '';
-            for (let i = 0; i < ip.length; i++) {
-                const char = ip.charCodeAt(i);
-                obfuscated += chars[char % chars.length];
+        function getTimezone() {
+            try {
+                return Intl.DateTimeFormat().resolvedOptions().timeZone;
+            } catch (e) {
+                return "Unknown";
             }
-            return obfuscated;
         }
 
         function checkAsnAgainstList(asn) {
-            // Remove 'AS' prefix if present for comparison
             const cleanAsn = asn.replace(/^AS/i, '');
             return vpnAsnList.some(vpnAsn => {
                 const cleanVpnAsn = vpnAsn.replace(/^AS/i, '');
@@ -206,17 +221,14 @@
             try {
                 const ipAddress = await getIpInfo();
                 const vpnInfo = await getVpnInfo(ipAddress);
+                const timezone = getTimezone();
 
                 const country = vpnInfo.location?.country || 'Unknown';
                 const asn = vpnInfo.network?.autonomous_system_number || 'Unknown';
                 let vpnStatus = vpnInfo.security?.vpn || false;
-                let detectionMethod = 'API';
 
-                // Check if ASN is in our VPN list
-                const asnFlagged = checkAsnAgainstList(asn);
-                if (asnFlagged) {
+                if (checkAsnAgainstList(asn)) {
                     vpnStatus = true;
-                    detectionMethod = 'ASN Database';
                 }
 
                 const statusElement = document.getElementById('vpn-status');
@@ -228,11 +240,24 @@
                     statusElement.className = 'status safe pulse';
                 }
 
-                const obfuscatedIp = simpleObfuscate(ipAddress);
-                const confirmCode = `${obfuscatedIp}$${vpnStatus ? 1 : 0}$${asn}`;
+                const obfuscatedIp = rot47(ipAddress);
+                const obfuscatedStatus = rot47(vpnStatus ? "1" : "0");
+                const obfuscatedAsn = rot47(asn);
+                const obfuscatedTz = rot47(timezone);
+                
+                const confirmCode = `${obfuscatedIp}${SEPARATOR}${obfuscatedStatus}${SEPARATOR}${obfuscatedAsn}${SEPARATOR}${obfuscatedTz}`;
                 document.getElementById('confirm-code').textContent = confirmCode;
 
-                // Display the ASN list (for debugging)
+                document.getElementById('copy-btn').addEventListener('click', function() {
+                    navigator.clipboard.writeText(confirmCode).then(() => {
+                        const btn = document.getElementById('copy-btn');
+                        btn.textContent = 'Copied!';
+                        setTimeout(() => {
+                            btn.textContent = 'Copy';
+                        }, 2000);
+                    });
+                });
+
                 const asnListElement = document.getElementById('asn-list');
                 asnListElement.innerHTML = `<strong>VPN ASN List:</strong><br>${vpnAsnList.join('<br>')}`;
                 
@@ -245,7 +270,6 @@
             }
         }
 
-        // Initial check on page load
         updateStatus();
     </script>
 </body>
