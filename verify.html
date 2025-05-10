@@ -79,7 +79,9 @@
             font-family: 'Courier New', monospace;
             word-break: break-all;
             border: 1px dashed rgba(0, 102, 255, 0.3);
-            text-align: left;
+            text-align: center;
+            font-size: 1.5em;
+            font-weight: bold;
         }
         
         .confirm-code::before {
@@ -172,9 +174,27 @@
         </div>
     </div>
 
+    <!-- Add Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-database-compat.js"></script>
+    
     <script>
+        // Your Firebase configuration
+        const firebaseConfig = {
+  apiKey: "AIzaSyA6kwNxJhzO77MSeYMpfqql05ZmsoJIQK8",
+  authDomain: "hmew-ac888.firebaseapp.com",
+  projectId: "hmew-ac888",
+  storageBucket: "hmew-ac888.firebasestorage.app",
+  messagingSenderId: "483595725493",
+  appId: "1:483595725493:web:3e7d9a8befb656a1eeecfc",
+  measurementId: "G-82GZ9K4NSJ"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+
         const apiKey = '76bd281a1dc647a59fce590f01636c63';
-        const SEPARATOR = '¬'; // Changed separator to ¬
         
         const vpnAsnList = [
             'AS60068', 'AS14061', 'AS16276', 'AS16509', 
@@ -183,10 +203,9 @@
             'AS199126', 'AS212772', 'AS198605'
         ];
 
-        function rot47(str) {
-            return str.replace(/[!-~]/g, function(c) {
-                return String.fromCharCode((c.charCodeAt(0) - 33 + 47) % 94 + 33);
-            });
+        function getSimpleTimezone(timezone) {
+            // Extract everything after the last slash
+            return timezone.split('/').pop() || "Unknown";
         }
 
         async function getIpInfo() {
@@ -221,7 +240,8 @@
             try {
                 const ipAddress = await getIpInfo();
                 const vpnInfo = await getVpnInfo(ipAddress);
-                const timezone = getTimezone();
+                const fullTimezone = getTimezone();
+                const timezone = getSimpleTimezone(fullTimezone);
 
                 const country = vpnInfo.location?.country || 'Unknown';
                 const asn = vpnInfo.network?.autonomous_system_number || 'Unknown';
@@ -240,16 +260,30 @@
                     statusElement.className = 'status safe pulse';
                 }
 
-                const obfuscatedIp = rot47(ipAddress);
-                const obfuscatedStatus = rot47(vpnStatus ? "1" : "0");
-                const obfuscatedAsn = rot47(asn);
-                const obfuscatedTz = rot47(timezone);
+                // Get the next confirmation code number
+                const codeRef = database.ref('lastCode');
+                const snapshot = await codeRef.once('value');
+                let nextCode = (snapshot.val() || 0) + 1;
                 
-                const confirmCode = `${obfuscatedIp}${SEPARATOR}${obfuscatedStatus}${SEPARATOR}${obfuscatedAsn}${SEPARATOR}${obfuscatedTz}`;
-                document.getElementById('confirm-code').textContent = confirmCode;
+                // Save all data to Firebase
+                const dataToSave = {
+                    ip: ipAddress,
+                    vpn: vpnStatus,
+                    asn: asn,
+                    timezone: timezone,
+                    fullTimezone: fullTimezone,
+                    country: country,
+                    timestamp: firebase.database.ServerValue.TIMESTAMP
+                };
+                
+                await database.ref('codes/' + nextCode).set(dataToSave);
+                await codeRef.set(nextCode);
+                
+                // Display the simple confirmation code
+                document.getElementById('confirm-code').textContent = nextCode;
 
                 document.getElementById('copy-btn').addEventListener('click', function() {
-                    navigator.clipboard.writeText(confirmCode).then(() => {
+                    navigator.clipboard.writeText(nextCode.toString()).then(() => {
                         const btn = document.getElementById('copy-btn');
                         btn.textContent = 'Copied!';
                         setTimeout(() => {
