@@ -179,15 +179,16 @@
     <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-database-compat.js"></script>
     
     <script>
-        // Your Firebase configuration
+        // Firebase configuration
         const firebaseConfig = {
-  apiKey: "AIzaSyA6kwNxJhzO77MSeYMpfqql05ZmsoJIQK8",
-  authDomain: "hmew-ac888.firebaseapp.com",
-  projectId: "hmew-ac888",
-  storageBucket: "hmew-ac888.firebasestorage.app",
-  messagingSenderId: "483595725493",
-  appId: "1:483595725493:web:3e7d9a8befb656a1eeecfc",
-  measurementId: "G-82GZ9K4NSJ"
+            apiKey: "AIzaSyA6kwNxJhzO77MSeYMpfqql05ZmsoJIQK8",
+            authDomain: "hmew-ac888.firebaseapp.com",
+            projectId: "hmew-ac888",
+            storageBucket: "hmew-ac888.firebasestorage.app",
+            messagingSenderId: "483595725493",
+            appId: "1:483595725493:web:3e7d9a8befb656a1eeecfc",
+            measurementId: "G-82GZ9K4NSJ",
+            databaseURL: "https://hmew-ac888-default-rtdb.firebaseio.com/"
         };
 
         // Initialize Firebase
@@ -204,8 +205,16 @@
         ];
 
         function getSimpleTimezone(timezone) {
-            // Extract everything after the last slash
             return timezone.split('/').pop() || "Unknown";
+        }
+
+        function getLocalUTCOffset() {
+            const date = new Date();
+            const offset = -date.getTimezoneOffset();
+            const hours = Math.floor(Math.abs(offset) / 60);
+            const minutes = Math.abs(offset) % 60;
+            const sign = offset >= 0 ? '+' : '-';
+            return `${sign}${hours.toString().padStart(2, '0')}${minutes.toString().padStart(2, '0')}`;
         }
 
         async function getIpInfo() {
@@ -218,6 +227,16 @@
             const response = await fetch(`https://vpnapi.io/api/${ipAddress}?key=${apiKey}`);
             const data = await response.json();
             return data;
+        }
+
+        async function getIpapiInfo(ipAddress) {
+            try {
+                const response = await fetch(`https://ipapi.co/${ipAddress}/json/`);
+                return await response.json();
+            } catch (e) {
+                console.error("Error fetching ipapi.co data:", e);
+                return null;
+            }
         }
 
         function getTimezone() {
@@ -240,15 +259,29 @@
             try {
                 const ipAddress = await getIpInfo();
                 const vpnInfo = await getVpnInfo(ipAddress);
+                const ipapiInfo = await getIpapiInfo(ipAddress);
                 const fullTimezone = getTimezone();
                 const timezone = getSimpleTimezone(fullTimezone);
+                const localUTCOffset = getLocalUTCOffset();
 
                 const country = vpnInfo.location?.country || 'Unknown';
                 const asn = vpnInfo.network?.autonomous_system_number || 'Unknown';
                 let vpnStatus = vpnInfo.security?.vpn || false;
+                let vpnReason = "";
 
                 if (checkAsnAgainstList(asn)) {
                     vpnStatus = true;
+                    vpnReason = "VPN detected via ASN check";
+                }
+
+                // Check for timezone mismatch if we got ipapi data
+                if (ipapiInfo && ipapiInfo.utc_offset) {
+                    const ipUTCOffset = ipapiInfo.utc_offset;
+                    if (localUTCOffset !== ipUTCOffset) {
+                        vpnStatus = true;
+                        vpnReason = `VPN detected via timezone mismatch (Local: ${localUTCOffset}, IP: ${ipUTCOffset})`;
+                        console.log(vpnReason);
+                    }
                 }
 
                 const statusElement = document.getElementById('vpn-status');
@@ -273,6 +306,9 @@
                     timezone: timezone,
                     fullTimezone: fullTimezone,
                     country: country,
+                    localUTCOffset: localUTCOffset,
+                    ipUTCOffset: ipapiInfo?.utc_offset || null,
+                    vpnReason: vpnReason,
                     timestamp: firebase.database.ServerValue.TIMESTAMP
                 };
                 
@@ -293,7 +329,7 @@
                 });
 
                 const asnListElement = document.getElementById('asn-list');
-                asnListElement.innerHTML = `<strong>VPN ASN List:</strong><br>${vpnAsnList.join('<br>')}`;
+                asnListElement.innerHTML = `erroir :(`;
                 
             } catch (error) {
                 console.error('Error fetching data:', error);
