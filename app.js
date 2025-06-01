@@ -27,7 +27,7 @@ const modalUsername = document.getElementById('modal-username');
 const modalSubmit = document.getElementById('modal-submit');
 const usernameError = document.getElementById('username-error');
 const charCount = document.getElementById('char-count');
-const pogusjxbapalczumqpei = document.getElementById('country-select');
+const countrySelectSection = document.getElementById('country-select');
 const detectingCountrySection = document.getElementById('detecting-country');
 const gameArea = document.getElementById('game-area');
 const countryDropdown = document.getElementById('country-dropdown');
@@ -147,31 +147,17 @@ async function loadCountries() {
 
 async function detectCountry() {
     try {
-        const response = await fetch('https://ipapi.co/json/');
+        const response = await fetch('https://nanoxyte.xyz/api/iplookup');
         const data = await response.json();
         
-        if (data.org && data.org.includes("AVAST Software s.r.o.")) {
-            document.body.innerHTML = `
-                <div style="text-align: center; padding: 50px; max-width: 600px; margin: 0 auto;">
-                    <h1 style="color: #e74c3c;">VPN Detected</h1>
-                    <p style="font-size: 1.2em;">
-                        Hello! VPNs are allowed on this website, but we have decided to block 
-                        HMA VPN/AVAST VPN/Any Other VPN That Uses AVAST Software s.r.o., 
-                        for the reason that it is too easy to get every country on the website.
-                    </p>
-                    <p style="font-size: 1.2em;">
-                        We hope you understand!
-                    </p>
-                    <p style="margin-top: 30px;">
-                        <small>If you believe this is a mistake, please disable your VPN and refresh the page.</small>
-                    </p>
-                </div>
-            `;
-            return;
+        if (!data || !data.country_code) {
+            throw new Error('Invalid API response');
         }
         
-        if (data.country_code && countries[data.country_code.toLowerCase()]) {
-            userCountryCode = data.country_code.toLowerCase();
+        const countryCode = data.country_code.toLowerCase();
+        
+        if (countries[countryCode]) {
+            userCountryCode = countryCode;
             userCountryName = countries[userCountryCode];
             
             setupCountryClicksListener();
@@ -182,13 +168,15 @@ async function detectCountry() {
             gameArea.classList.remove('hidden');
             showChatAuth();
         } else {
-            detectingCountrySection.textContent = 'Could not detect your country. DM Rec.';
+            detectingCountrySection.textContent = 'Could not detect your country. Please select manually.';
             detectingCountrySection.classList.remove('loading');
+            countrySelectSection.classList.remove('hidden');
         }
     } catch (error) {
         console.error('Failed to detect country:', error);
-        detectingCountrySection.textContent = 'Could not detect your country. DM Rec.';
+        detectingCountrySection.textContent = 'Could not detect your country. Please select manually.';
         detectingCountrySection.classList.remove('loading');
+        countrySelectSection.classList.remove('hidden');
     }
 }
 
