@@ -7,12 +7,13 @@
     <style>
         :root {
             --bg-color: #000000;
-            --card-color: #111111;
+            --card-color: rgba(20, 0, 0, 0.8);
             --text-color: #ffffff;
             --text-secondary: #bbbbbb;
-            --accent-color: #0066ff;
-            --danger-color: #ff5555;
+            --accent-color: #ff0000;
+            --danger-color: #ff3333;
             --border-radius: 12px;
+            --glow-color: rgba(255, 0, 0, 0.3);
         }
         
         body {
@@ -22,35 +23,59 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            background-color: var(--bg-color);
+            background: linear-gradient(135deg, #1a0000 0%, #000000 50%, #1a0000 100%);
             color: var(--text-color);
             margin: 0;
             padding: 20px;
-            transition: background 0.3s ease;
+            background-size: 200% 200%;
+            animation: gradientBG 15s ease infinite;
         }
         
         .container {
             background: var(--card-color);
             padding: 30px;
-            box-shadow: 0 8px 32px rgba(0, 102, 255, 0.1);
+            box-shadow: 0 8px 32px var(--glow-color);
             border-radius: var(--border-radius);
             text-align: center;
             max-width: 500px;
             width: 100%;
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 0, 0, 0.1);
             animation: fadeIn 0.5s ease-out;
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,0,0,0.1) 0%, rgba(0,0,0,0) 70%);
+            animation: pulseGlow 8s linear infinite;
+            z-index: -1;
         }
         
         .logo {
             width: 80px;
             margin-bottom: 15px;
+            filter: drop-shadow(0 0 5px var(--accent-color));
         }
+      
+        .hidden {
+            display: none;
+        }
+
         
         h1 {
             margin-top: 0;
             color: var(--accent-color);
             font-weight: 600;
             margin-bottom: 20px;
+            text-shadow: 0 0 10px var(--glow-color);
+            animation: textGlow 2s ease-in-out infinite alternate;
         }
         
         .status {
@@ -61,10 +86,12 @@
         
         .safe {
             color: var(--accent-color);
+            text-shadow: 0 0 5px var(--glow-color);
         }
         
         .unsafe {
             color: var(--danger-color);
+            text-shadow: 0 0 5px rgba(255, 51, 51, 0.5);
         }
         
         .confirm-code-container {
@@ -74,14 +101,20 @@
         
         .confirm-code {
             padding: 15px;
-            background: rgba(0, 102, 255, 0.05);
+            background: rgba(255, 0, 0, 0.05);
             border-radius: var(--border-radius);
             font-family: 'Courier New', monospace;
             word-break: break-all;
-            border: 1px dashed rgba(0, 102, 255, 0.3);
+            border: 1px dashed rgba(255, 0, 0, 0.3);
             text-align: center;
             font-size: 1.5em;
             font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        .confirm-code:hover {
+            background: rgba(255, 0, 0, 0.1);
+            box-shadow: 0 0 15px var(--glow-color);
         }
         
         .confirm-code::before {
@@ -106,31 +139,55 @@
             cursor: pointer;
             border: 1px solid var(--accent-color);
             border-radius: 10px;
+            transition: all 0.3s ease;
         }
         
         .copy-btn:hover {
-            background: rgba(0, 102, 255, 0.1);
+            background: rgba(255, 0, 0, 0.1);
+            box-shadow: 0 0 10px var(--glow-color);
         }
         
         .loading {
             display: inline-block;
             width: 20px;
             height: 20px;
-            border: 3px solid rgba(255, 255, 255, 0.3);
+            border: 3px solid rgba(255, 0, 0, 0.3);
             border-radius: 50%;
             border-top-color: var(--accent-color);
             animation: spin 1s ease-in-out infinite;
         }
         
-        #asn-list {
+        #details {
             display: none;
             margin-top: 20px;
             text-align: left;
             max-height: 150px;
             overflow-y: auto;
             padding: 10px;
-            background: rgba(255, 255, 255, 0.03);
+            background: rgba(255, 0, 0, 0.03);
             border-radius: var(--border-radius);
+            border: 1px dashed rgba(255, 0, 0, 0.1);
+        }
+        
+        .flag {
+            height: 20px;
+            vertical-align: middle;
+            margin-right: 5px;
+        }
+        
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 5px 0;
+            border-bottom: 1px solid rgba(255, 0, 0, 0.1);
+        }
+        
+        .detail-label {
+            color: var(--text-secondary);
+        }
+        
+        .detail-value {
+            font-weight: bold;
         }
         
         @keyframes fadeIn {
@@ -140,6 +197,22 @@
         
         @keyframes spin {
             to { transform: rotate(360deg); }
+        }
+        
+        @keyframes pulseGlow {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        @keyframes textGlow {
+            from { text-shadow: 0 0 5px var(--glow-color); }
+            to { text-shadow: 0 0 15px var(--glow-color); }
+        }
+        
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
         
         .pulse {
@@ -155,7 +228,6 @@
 </head>
 <body>
     <div class="container">
-        <img src="https://files.catbox.moe/08csdl.png" alt="Country Quest Checker" class="logo">
         <h1>Country Quest Checker</h1>
         
         <div class="status" id="vpn-status">
@@ -169,8 +241,8 @@
             <div class="copy-btn" id="copy-btn">Copy</div>
         </div>
         
-        <div id="asn-list">
-            <!-- ASN numbers will be loaded here -->
+        <div id="details" class="hidden">
+            <!-- IP details will be loaded here -->
         </div>
     </div>
 
@@ -184,7 +256,7 @@
             apiKey: "AIzaSyA6kwNxJhzO77MSeYMpfqql05ZmsoJIQK8",
             authDomain: "hmew-ac888.firebaseapp.com",
             projectId: "hmew-ac888",
-            storageBucket: "hmew-ac888.firebasestorage.app",
+            storageBucket: "hmew-ac888.appspot.com",
             messagingSenderId: "483595725493",
             appId: "1:483595725493:web:3e7d9a8befb656a1eeecfc",
             measurementId: "G-82GZ9K4NSJ",
@@ -194,8 +266,6 @@
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
         const database = firebase.database();
-
-        const apiKey = '76bd281a1dc647a59fce590f01636c63';
         
         const vpnAsnList = [
             'AS60068', 'AS14061', 'AS16276', 'AS16509', 
@@ -334,20 +404,10 @@
             return data.ip;
         }
 
-        async function getVpnInfo(ipAddress) {
-            const response = await fetch(`https://vpnapi.io/api/${ipAddress}?key=${apiKey}`);
+        async function getNanoxyteInfo(ipAddress) {
+            const response = await fetch(`https://nanoxyte.xyz/api/iplookup?ip=${ipAddress}`);
             const data = await response.json();
             return data;
-        }
-
-        async function getIpapiInfo(ipAddress) {
-            try {
-                const response = await fetch(`https://ipapi.co/${ipAddress}/json/`);
-                return await response.json();
-            } catch (e) {
-                console.error("Error fetching ipapi.co data:", e);
-                return null;
-            }
         }
 
         function getTimezone() {
@@ -366,39 +426,41 @@
             });
         }
 
+        function createDetailRow(label, value) {
+            const row = document.createElement('div');
+            row.className = 'detail-row';
+            
+            const labelSpan = document.createElement('span');
+            labelSpan.className = 'detail-label';
+            labelSpan.textContent = label;
+            
+            const valueSpan = document.createElement('span');
+            valueSpan.className = 'detail-value';
+            valueSpan.textContent = value;
+            
+            row.appendChild(labelSpan);
+            row.appendChild(valueSpan);
+            
+            return row;
+        }
+
         async function updateStatus() {
             try {
                 const ipAddress = await getIpInfo();
-                const vpnInfo = await getVpnInfo(ipAddress);
-                const ipapiInfo = await getIpapiInfo(ipAddress);
+                const nanoxyteInfo = await getNanoxyteInfo(ipAddress);
                 const fullTimezone = getTimezone();
                 const timezone = getSimpleTimezone(fullTimezone);
                 const localUTCOffset = getLocalUTCOffset();
 
-                const country = vpnInfo.location?.country || 'Unknown';
-                const asn = vpnInfo.network?.autonomous_system_number || 'Unknown';
-                let vpnStatus = vpnInfo.security?.vpn || false;
-                let vpnReason = "";
-
-                if (checkAsnAgainstList(asn)) {
-                    vpnStatus = true;
-                    vpnReason = "VPN detected via ASN check";
-                }
-
-                // Check for timezone mismatch if we got ipapi data
-                if (ipapiInfo && ipapiInfo.utc_offset) {
-                    const ipUTCOffset = ipapiInfo.utc_offset;
-                    if (localUTCOffset !== ipUTCOffset) {
-                        vpnStatus = true;
-                        vpnReason = `VPN detected via timezone mismatch (Local: ${localUTCOffset}, IP: ${ipUTCOffset})`;
-                        console.log(vpnReason);
-                    }
-                }
+                const country = nanoxyteInfo.country || 'Unknown';
+                const asn = nanoxyteInfo.asn ? `AS${nanoxyteInfo.asn}` : 'Unknown';
+                let vpnStatus = checkAsnAgainstList(asn);
+                let vpnReason = vpnStatus ? "VPN detected via ASN check" : "";
 
                 const statusElement = document.getElementById('vpn-status');
                 if (vpnStatus) {
-                    statusElement.innerHTML = `${country} - No VPN Detected <span class="safe">✓</span>`;
-                    statusElement.className = 'status safe pulse';
+                    statusElement.innerHTML = `${country} - VPN Detected <span class="unsafe">✗</span>`;
+                    statusElement.className = 'status unsafe pulse';
                 } else {
                     statusElement.innerHTML = `${country} - No VPN Detected <span class="safe">✓</span>`;
                     statusElement.className = 'status safe pulse';
@@ -417,8 +479,13 @@
                     timezone: timezone,
                     fullTimezone: fullTimezone,
                     country: country,
+                    country_code: nanoxyteInfo.country_code || null,
+                    region: nanoxyteInfo.region || null,
+                    city: nanoxyteInfo.city || null,
+                    isp: nanoxyteInfo.isp || null,
+                    latitude: nanoxyteInfo.latitude || null,
+                    longitude: nanoxyteInfo.longitude || null,
                     localUTCOffset: localUTCOffset,
-                    ipUTCOffset: ipapiInfo?.utc_offset || null,
                     vpnReason: vpnReason,
                     timestamp: firebase.database.ServerValue.TIMESTAMP
                 };
@@ -439,8 +506,24 @@
                     });
                 });
 
-                const asnListElement = document.getElementById('asn-list');
-                asnListElement.innerHTML = `erroir :(`;
+                // Populate details section
+                const detailsElement = document.getElementById('details');
+                detailsElement.innerHTML = '';
+                
+                if (nanoxyteInfo.flag_image) {
+                    const flagRow = document.createElement('div');
+                    flagRow.style.textAlign = 'center';
+                    flagRow.style.marginBottom = '10px';
+                    const flagImg = document.createElement('img');
+                    flagImg.src = nanoxyteInfo.flag_image;
+                    flagImg.alt = country;
+                    flagImg.className = 'flag';
+                    flagImg.style.height = '30px';
+                    flagRow.appendChild(flagImg);
+                    detailsElement.appendChild(flagRow);
+                }
+                
+                
                 
             } catch (error) {
                 console.error('Error fetching data:', error);
